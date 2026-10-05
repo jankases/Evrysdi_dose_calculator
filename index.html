@@ -15,6 +15,11 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Flatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
     <style>
         body { font-family: 'Prompt', sans-serif; background-color: #f8fafc; }
         input[type=number]::-webkit-inner-spin-button, 
@@ -24,6 +29,8 @@
         
         .premium-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01); }
         .input-focus-ring:focus-within { outline: 2px solid #ec4899; outline-offset: -1px; }
+        
+        .flatpickr-input[readonly] { background-color: transparent; }
     </style>
 </head>
 <body class="text-slate-800 p-4 md:p-8">
@@ -32,13 +39,10 @@
         <!-- Header -->
         <header class="mb-6 text-center md:text-left flex flex-col md:flex-row justify-between items-center bg-white p-6 md:px-8 md:py-6 rounded-2xl premium-shadow border border-slate-100">
             <div class="flex flex-col items-center md:items-start">
-                <!-- ขยายขนาดโลโก้ Evrysdi ให้ใหญ่และโดดเด่นขึ้น -->
                 <img src="Evrysdi_logo.png" alt="EVRYSDI® (risdiplam)" class="h-20 md:h-28 object-contain mb-3">
-                <!-- ขยับ Subtitle เล็กน้อยเพื่อให้บาลานซ์กับโลโก้ที่ใหญ่ขึ้น -->
                 <p class="text-slate-500 text-sm md:text-base font-medium md:pl-2">Dose Calculator Website for Healthcare Professionals</p>
             </div>
             <div class="mt-5 md:mt-0">
-                <!-- โลโก้ Roche ปรับสัดส่วนให้เข้ากัน -->
                 <img src="roche_logo.png" alt="Roche" class="h-10 md:h-12 object-contain">
             </div>
         </header>
@@ -62,7 +66,7 @@
                         <button id="tabDobBtn" onclick="setInputMode('dob')" class="flex-1 py-2 rounded-lg text-sm font-bold transition-all text-slate-500 hover:text-slate-700">เลือกวันเกิด (D.O.B)</button>
                     </div>
 
-                    <!-- 1.1 Age Inputs (Show/Hide based on tab) -->
+                    <!-- 1.1 Age Inputs -->
                     <div id="ageInputContainer" class="block">
                         <label class="block text-sm font-semibold text-slate-700 mb-2">1.1 Age (อายุ)</label>
                         <div class="grid grid-cols-2 gap-4">
@@ -77,12 +81,15 @@
                         </div>
                     </div>
 
-                    <!-- 1.1 Date of Birth Input (Hidden by default) -->
+                    <!-- 1.1 Date of Birth Input -->
                     <div id="dobInputContainer" class="hidden">
                         <label class="block text-sm font-semibold text-slate-700 mb-2">1.1 Date of Birth (วันเกิด)</label>
-                        <div class="relative bg-white border border-slate-300 rounded-xl px-4 py-2 input-focus-ring transition shadow-sm">
+                        <div class="relative bg-white border border-slate-300 rounded-xl px-4 py-2 input-focus-ring transition shadow-sm cursor-pointer">
                             <label class="block text-[11px] text-slate-500 font-medium">เลือกวันที่</label>
-                            <input type="date" id="dobInput" onchange="calculateDose()" class="w-full bg-transparent outline-none text-lg font-bold text-slate-800 py-1">
+                            <div class="flex items-center justify-between">
+                                <input type="text" id="dobInput" class="w-full bg-transparent outline-none text-lg font-bold text-slate-800 py-1 cursor-pointer" placeholder="dd/mm/yyyy">
+                                <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            </div>
                         </div>
                         <p id="calculatedAgeDisplay" class="text-xs text-pink-600 mt-2 font-medium"></p>
                     </div>
@@ -148,7 +155,8 @@
 
                         <!-- VOLUME PER DOSE -->
                         <div class="border-2 border-slate-200 rounded-xl p-4 relative bg-white flex flex-col justify-center items-center shadow-sm">
-                            <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-700 px-3 py-0.5 rounded-full text-[10px] font-bold text-white uppercase tracking-wider shadow-sm">VOLUME</span>
+                            <!-- แก้ไขคำให้ตรงตามดีไซน์อ้างอิง: VOLUME PER DOSE (ROUNDED) -->
+                            <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-700 px-3 py-0.5 rounded-full text-[10px] font-bold text-white uppercase tracking-wider shadow-sm whitespace-nowrap">VOLUME PER DOSE <span class="font-normal opacity-90">(ROUNDED)</span></span>
                             <div class="mt-2 text-center">
                                 <span id="resVolume" class="text-3xl font-bold text-slate-800 transition-all">0.00</span>
                                 <span class="text-slate-500 font-medium ml-1">mL</span>
@@ -171,7 +179,7 @@
                             <p id="syringeText" class="text-xs font-medium text-slate-500 mt-1">Please enter patient data</p>
                         </div>
                         
-                        <!-- Syringe Image Graphic (ตัดพื้นหลังด้วย mix-blend-multiply) -->
+                        <!-- Syringe Image Graphic -->
                         <div class="w-40 h-full flex items-center justify-end relative" id="syringeGraphic">
                             <img id="syringeImage" src="" alt="Syringe" class="max-w-full max-h-full object-contain hidden transition-opacity duration-300 mix-blend-multiply">
                         </div>
@@ -308,6 +316,21 @@
     <!-- JavaScript Logic -->
     <script>
         let inputMode = 'age';
+        let fpInstance = null;
+
+        // Initialize Flatpickr 
+        document.addEventListener("DOMContentLoaded", function() {
+            fpInstance = flatpickr("#dobInput", {
+                dateFormat: "Y-m-d",
+                altInput: true,
+                altFormat: "d/m/Y",
+                maxDate: "today",
+                disableMobile: "true",
+                onChange: function() {
+                    calculateDose();
+                }
+            });
+        });
 
         // Function to clamp month input
         function handleMonthInput(el) {
@@ -323,7 +346,11 @@
         function clearAllData() {
             document.getElementById('ageYears').value = "";
             document.getElementById('ageMonths').value = "";
-            document.getElementById('dobInput').value = "";
+            
+            if (fpInstance) {
+                fpInstance.clear();
+            }
+            
             document.getElementById('calculatedAgeDisplay').innerText = "";
             document.getElementById('weight').value = "";
             resetResults();
