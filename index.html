@@ -80,7 +80,7 @@
                     </button>
                     
                     <div class="text-center mt-2">
-                        <a href="#reference" class="text-xs text-blue-500 hover:underline">ℹ️ ดูเกณฑ์การให้ยาด้านล่าง</a>
+                        <a href="#reference" class="text-xs text-blue-500 hover:underline">ℹ️️ ดูเกณฑ์การให้ยาด้านล่าง</a>
                     </div>
                 </div>
             </div>
@@ -146,7 +146,7 @@
             
             <div class="p-8 space-y-10">
                 
-                <!-- Flowchart Section -->
+                <!-- Flowchart Section (แก้เส้นให้ตรง 100%) -->
                 <div>
                     <h3 class="text-[17px] font-bold text-[#1d2b5c] mb-6">
                         Dosing regimen by age and body weight<sup class="text-[11px]">1</sup>
@@ -155,60 +155,76 @@
                     <div class="overflow-x-auto w-full pb-6">
                         <div class="min-w-[760px] flex flex-col items-center font-sans">
                             
-                            <div class="text-center font-bold text-sm text-[#1d2b5c] mb-6 uppercase tracking-wider bg-blue-50 px-6 py-2 rounded-lg border border-blue-100">
-                                Use the flowchart below to determine the recommended<br>once-daily dose in mg for each patient
-                            </div>
-                            
                             <!-- Level 1 -->
-                            <div class="bg-[#253468] text-white px-14 py-2.5 rounded-full font-semibold text-sm shadow-md z-10">Patient age</div>
-                            <div class="w-[3px] h-6 bg-[#1d2b5c]"></div>
-                            
-                            <!-- Level 2: Horizontal Branch -->
-                            <div class="w-[480px] border-t-[3px] border-[#1d2b5c] relative">
-                                <div class="w-[3px] h-6 bg-[#1d2b5c] absolute left-0 top-0"></div>
-                                <div class="w-[3px] h-6 bg-[#1d2b5c] absolute left-1/2 -translate-x-1/2 top-0"></div>
-                                <div class="w-[3px] h-6 bg-[#1d2b5c] absolute right-0 top-0"></div>
+                            <div class="bg-[#253468] text-white px-14 py-2.5 rounded-full font-semibold text-sm shadow-md z-10 relative">
+                                Patient age
+                                <!-- เส้นชี้ลงมาจาก Patient age -->
+                                <div class="absolute left-1/2 -translate-x-1/2 bottom-[-24px] w-[3px] h-6 bg-[#1d2b5c]"></div>
                             </div>
                             
-                            <!-- Level 3 & 4 -->
-                            <div class="w-[720px] flex justify-between mt-2">
+                            <div class="h-6"></div> <!-- Spacer -->
+                            
+                            <!-- โครงสร้างหลัก (กว้าง 720px) ใช้ Absolute วางเส้นให้เป๊ะ -->
+                            <div class="w-[720px] relative">
                                 
-                                <div class="w-[240px] flex flex-col items-center">
-                                    <div class="text-[13px] font-bold text-slate-800 mb-2">&lt;2 months</div>
-                                    <div class="w-[3px] h-10 bg-[#1d2b5c]"></div>
-                                    <div class="bg-[#737e93] text-white w-[190px] py-3.5 rounded-xl text-center text-sm font-semibold shadow-md">0.15 mg/kg X weight (kg)</div>
+                                <!-- เส้นแกนนอนยาว (จาก 16.6% ถึง 83.3% ของ 720px = จากระยะ 120px ถึง 600px) -->
+                                <div class="absolute top-0 left-[120px] w-[480px] h-[3px] bg-[#1d2b5c]"></div>
+                                
+                                <!-- เส้นแนวตั้ง 3 เส้นหลัก -->
+                                <div class="absolute top-0 left-[120px] w-[3px] h-[64px] bg-[#1d2b5c] -translate-x-1/2"></div>
+                                <div class="absolute top-0 left-[360px] w-[3px] h-[64px] bg-[#1d2b5c] -translate-x-1/2"></div>
+                                <div class="absolute top-0 left-[600px] w-[3px] h-[32px] bg-[#1d2b5c] -translate-x-1/2"></div>
+                                
+                                <!-- พื้นที่สำหรับวางเนื้อหา 3 คอลัมน์ (ความสูงต้องพอดีกับเส้นแนวตั้งที่ยาวที่สุดคือ 64px) -->
+                                <div class="h-[64px] w-full flex relative pt-3">
+                                    <!-- ข้อความคอลัมน์ซ้าย (กึ่งกลางอยู่ที่ 120px) -->
+                                    <div class="absolute left-[120px] -translate-x-1/2 text-[13px] font-bold text-slate-800 bg-white px-2 leading-none whitespace-nowrap">&lt;2 months</div>
+                                    <!-- ข้อความคอลัมน์กลาง (กึ่งกลางอยู่ที่ 360px) -->
+                                    <div class="absolute left-[360px] -translate-x-1/2 text-[13px] font-bold text-slate-800 bg-white px-2 leading-tight text-center whitespace-nowrap">2 months to<br>&lt;2 years</div>
+                                    <!-- ข้อความคอลัมน์ขวา (กึ่งกลางอยู่ที่ 600px) -->
+                                    <div class="absolute left-[600px] -translate-x-1/2 text-[13px] font-bold text-slate-800 bg-white px-2 leading-none whitespace-nowrap">&ge;2 years</div>
                                 </div>
                                 
-                                <div class="w-[240px] flex flex-col items-center">
-                                    <div class="text-[13px] font-bold text-slate-800 mb-2 text-center leading-tight">2 months to<br>&lt;2 years</div>
-                                    <div class="w-[3px] h-[16px] bg-[#1d2b5c]"></div>
-                                    <div class="bg-[#c92a5e] text-white w-[190px] py-3.5 rounded-xl text-center text-sm font-semibold shadow-md mt-[8px]">0.20 mg/kg X weight (kg)</div>
-                                </div>
-                                
-                                <div class="w-[240px] flex flex-col items-center">
-                                    <div class="text-[13px] font-bold text-slate-800 mb-2">&ge;2 years</div>
-                                    <div class="w-[3px] h-4 bg-[#1d2b5c]"></div>
-                                    <div class="bg-[#253468] text-white px-6 py-2 rounded-full font-semibold text-sm shadow-md w-[200px] text-center z-10">Patient weight</div>
-                                    <div class="w-[3px] h-5 bg-[#1d2b5c]"></div>
+                                <!-- แถวกล่องผลลัพธ์ -->
+                                <div class="flex relative h-[80px]">
+                                    <!-- กล่องซ้าย (กึ่งกลาง 120px) -->
+                                    <div class="absolute left-[120px] -translate-x-1/2 bg-[#737e93] text-white w-[200px] py-3.5 rounded-xl text-center text-sm font-semibold shadow-md whitespace-nowrap">0.15 mg/kg X weight (kg)</div>
                                     
-                                    <div class="w-[140px] border-t-[3px] border-[#1d2b5c] relative">
-                                        <div class="w-[3px] h-5 bg-[#1d2b5c] absolute left-0 top-0"></div>
-                                        <div class="w-[3px] h-5 bg-[#1d2b5c] absolute right-0 top-0"></div>
-                                    </div>
+                                    <!-- กล่องกลาง (กึ่งกลาง 360px) -->
+                                    <div class="absolute left-[360px] -translate-x-1/2 bg-[#c92a5e] text-white w-[200px] py-3.5 rounded-xl text-center text-sm font-semibold shadow-md whitespace-nowrap">0.20 mg/kg X weight (kg)</div>
                                     
-                                    <div class="w-[180px] flex justify-between mt-4 text-xs font-bold text-slate-800">
-                                        <div class="w-1/2 text-center">&lt;20 kg</div>
-                                        <div class="w-1/2 text-center">&ge;20 kg</div>
-                                    </div>
-                                    
-                                    <div class="w-[190px] flex justify-between mt-1">
-                                        <div class="w-[95px] flex flex-col items-center">
-                                            <div class="w-[3px] h-4 bg-[#1d2b5c]"></div>
-                                            <div class="bg-[#00a3c4] text-white w-full py-2.5 rounded-xl text-center text-[11px] leading-tight font-semibold shadow-md">0.25 mg/kg X<br>weight (kg)</div>
+                                    <!-- ส่วนแยกฝั่งขวา (Patient weight) (กึ่งกลาง 600px) -->
+                                    <div class="absolute left-[600px] -translate-x-1/2 flex flex-col items-center" style="top: -16px;">
+                                        <!-- กล่อง Patient weight -->
+                                        <div class="bg-[#253468] text-white px-6 py-2 rounded-full font-semibold text-sm shadow-md w-[200px] text-center z-10 relative">
+                                            Patient weight
+                                            <!-- เส้นชี้ลงมาจาก Patient weight -->
+                                            <div class="absolute left-1/2 -translate-x-1/2 bottom-[-20px] w-[3px] h-5 bg-[#1d2b5c]"></div>
                                         </div>
-                                        <div class="w-[95px] flex flex-col items-center">
-                                            <div class="w-[3px] h-4 bg-[#1d2b5c]"></div>
-                                            <div class="bg-[#fdb933] text-white w-[80px] rounded-xl text-center text-[13px] font-semibold shadow-md flex items-center justify-center h-[48px]">5 mg</div>
+                                        
+                                        <div class="h-5"></div> <!-- Spacer -->
+                                        
+                                        <!-- Nested Horizontal Branch (กว้าง 140px) -->
+                                        <div class="w-[140px] relative">
+                                            <!-- เส้นแนวนอน -->
+                                            <div class="absolute top-0 left-0 w-full h-[3px] bg-[#1d2b5c]"></div>
+                                            <!-- เส้นแนวตั้งซ้ายขวา (ยาว 36px) -->
+                                            <div class="absolute top-0 left-0 w-[3px] h-[36px] bg-[#1d2b5c]"></div>
+                                            <div class="absolute top-0 right-0 w-[3px] h-[36px] bg-[#1d2b5c]"></div>
+                                            
+                                            <!-- ข้อความ <20 kg และ >=20 kg (วางทับเส้น) -->
+                                            <div class="absolute top-3 left-0 -translate-x-1/2 text-xs font-bold text-slate-800 bg-white px-1 whitespace-nowrap">&lt;20 kg</div>
+                                            <div class="absolute top-3 right-0 translate-x-1/2 text-xs font-bold text-slate-800 bg-white px-1 whitespace-nowrap">&ge;20 kg</div>
+                                        </div>
+                                        
+                                        <div class="h-9"></div> <!-- Spacer -->
+                                        
+                                        <!-- กล่องคำตอบ 2 กล่องสุดท้าย -->
+                                        <div class="w-[200px] flex justify-between absolute top-[72px]">
+                                            <!-- 0.25 mg/kg (ตรงกับเส้นซ้าย) -->
+                                            <div class="bg-[#00a3c4] text-white w-[95px] py-2.5 rounded-xl text-center text-[11px] leading-tight font-semibold shadow-md absolute left-[30px] -translate-x-1/2">0.25 mg/kg X<br>weight (kg)</div>
+                                            <!-- 5 mg (ตรงกับเส้นขวา) -->
+                                            <div class="bg-[#fdb933] text-white w-[95px] rounded-xl text-center text-[13px] font-semibold shadow-md flex items-center justify-center h-[48px] absolute right-[30px] translate-x-1/2">5 mg</div>
                                         </div>
                                     </div>
                                 </div>
@@ -261,7 +277,6 @@
                         </table>
                     </div>
                     
-                    <!-- Reference Footnote (ข้อความที่คุณต้องการ) -->
                     <p class="text-[12px] text-slate-600 mt-6 font-medium tracking-wide">
                         Reference 1.Evrysdi® Prescribing Information 2025
                     </p>
