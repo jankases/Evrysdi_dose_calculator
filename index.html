@@ -200,94 +200,86 @@
             
             <div class="p-8 space-y-10">
                 
-                <!-- Flowchart Section (วาดเส้นใหม่แบบ "Bracket Style" ตามต้นฉบับเป๊ะ) -->
+                <!-- Flowchart Section (วาดกล่องและเส้นใหม่ให้เหมือนภาพต้นฉบับ 100% Pixel-Perfect) -->
                 <div>
                     <h3 class="text-[17px] font-bold text-[#1d2b5c] mb-6">
                         Dosing regimen by age and body weight<sup class="text-[11px]">1</sup>
                     </h3>
                     
                     <div class="overflow-x-auto no-vertical-scroll w-full pb-4">
-                        <div class="min-w-[840px] flex justify-center">
-                            <svg width="840" height="260" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg" class="font-sans">
+                        <div class="min-w-[960px] flex justify-center">
+                            <svg width="960" height="280" viewBox="0 0 960 280" xmlns="http://www.w3.org/2000/svg" class="font-sans">
                                 <defs>
                                     <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%">
                                         <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.12"/>
                                     </filter>
                                 </defs>
 
-                                <!-- Connecting Lines (เส้นแบบมีช่องว่างตรงกลาง) -->
+                                <!-- Connecting Lines (โครงสร้าง Bracket Style เหมือนต้นฉบับ) -->
                                 <g stroke="#1d2b5c" stroke-width="2.5" fill="none">
                                     
-                                    <!-- 1. เส้นชี้ลงจาก "มุมซ้ายล่าง" ของ Patient age ไปทางซ้าย -->
-                                    <path d="M 370 42 L 370 70" />
-                                    <!-- ลากแนวนอนไปซ้ายสุด -->
-                                    <path d="M 370 70 L 120 70" />
-                                    <!-- ลากลงเข้ากล่อง < 2 months -->
-                                    <path d="M 120 70 L 120 180" />
-
-                                    <!-- 2. เส้นชี้ลงจาก "มุมขวาล่าง" ของ Patient age ไปทางขวา -->
-                                    <path d="M 470 42 L 470 70" />
-                                    <!-- ลากแนวนอนไปขวาสุด -->
-                                    <path d="M 470 70 L 600 70" />
-                                    <!-- ลากลงเข้ากล่อง Patient weight (มุมซ้ายบน) -->
-                                    <path d="M 600 70 L 600 90" />
-
-                                    <!-- 3. เส้นกิ่งกลาง (เชื่อมต่อจากเส้นแนวนอนซ้าย) -->
-                                    <path d="M 320 70 L 320 180" />
+                                    <!-- Bracket ซ้าย: จากมุมซ้ายล่าง Patient age -> ลากซ้าย -> ลง Box 1 -->
+                                    <path d="M 380 46 L 380 90 L 160 90 L 160 200" />
                                     
-                                    <!-- 4. เส้นจาก Patient weight ชี้ลงมา 2 กิ่งย่อย -->
-                                    <path d="M 675 122 L 675 148" />
-                                    <path d="M 575 148 L 775 148" />
-                                    <path d="M 575 148 L 575 180 M 775 148 L 775 180" />
+                                    <!-- Bracket ขวา: จากมุมขวาล่าง Patient age -> ลากขวา -> ลง Patient weight -->
+                                    <path d="M 580 46 L 580 90 L 800 90 L 800 110" />
+
+                                    <!-- กิ่งกลาง: เส้นเดี่ยวชี้ลง Box 2 (เว้นช่องว่างด้านบนให้ข้อความ) -->
+                                    <path d="M 480 100 L 480 200" />
+
+                                    <!-- Bracket ล่าง: จาก Patient weight -> แยกซ้าย/ขวา -> ลง Box 3 และ 4 -->
+                                    <path d="M 800 146 L 800 170 M 710 170 L 890 170 M 710 170 L 710 200 M 890 170 L 890 200" />
                                 </g>
 
-                                <!-- Text Labels on Lines -->
+                                <!-- Text Labels on Lines (ใช้สีขาวทำกรอบเพื่อตัดเส้นให้อ่านง่ายเหมือนต้นฉบับ) -->
                                 <g font-size="12" font-weight="bold" fill="#1d2b5c" text-anchor="middle">
-                                    <text x="120" y="58" stroke="#ffffff" stroke-width="5" paint-order="stroke fill">&lt;2 months</text>
-                                    <text x="320" y="46" stroke="#ffffff" stroke-width="5" paint-order="stroke fill">2 months to</text>
-                                    <text x="320" y="60" stroke="#ffffff" stroke-width="5" paint-order="stroke fill">&lt;2 years</text>
-                                    <text x="600" y="58" stroke="#ffffff" stroke-width="5" paint-order="stroke fill">&ge;2 years</text>
+                                    <text x="270" y="86" stroke="#ffffff" stroke-width="8" paint-order="stroke fill">&lt;2 months</text>
+                                    <text x="480" y="74" stroke="#ffffff" stroke-width="8" paint-order="stroke fill">2 months to</text>
+                                    <text x="480" y="88" stroke="#ffffff" stroke-width="8" paint-order="stroke fill">&lt;2 years</text>
+                                    <text x="690" y="86" stroke="#ffffff" stroke-width="8" paint-order="stroke fill">&ge;2 years</text>
                                     
-                                    <text x="575" y="142" stroke="#ffffff" stroke-width="5" paint-order="stroke fill">&lt;20 kg</text>
-                                    <text x="775" y="142" stroke="#ffffff" stroke-width="5" paint-order="stroke fill">&ge;20 kg</text>
+                                    <text x="755" y="166" stroke="#ffffff" stroke-width="8" paint-order="stroke fill">&lt;20 kg</text>
+                                    <text x="845" y="166" stroke="#ffffff" stroke-width="8" paint-order="stroke fill">&ge;20 kg</text>
                                 </g>
+
+                                <!-- รูปทรงกล่องเอกลักษณ์ต้นฉบับ (มุมบนซ้าย/ล่างขวาโค้ง, มุมบนขวา/ล่างซ้ายเหลี่ยม) -->
 
                                 <!-- Level 1: Patient age -->
                                 <g filter="url(#shadow)">
-                                    <rect x="345" y="10" width="150" height="32" rx="6" fill="#253468"/>
-                                    <text x="420" y="31" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">Patient age</text>
+                                    <path d="M 372 10 L 600 10 L 600 34 A 12 12 0 0 1 588 46 L 360 46 L 360 22 A 12 12 0 0 1 372 10 Z" fill="#253468"/>
+                                    <text x="480" y="32" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">Patient age</text>
                                 </g>
 
-                                <!-- Level 2: Middle Box (Patient weight) -->
+                                <!-- Level 2: Patient weight -->
                                 <g filter="url(#shadow)">
-                                    <rect x="600" y="90" width="150" height="32" rx="6" fill="#253468"/>
-                                    <text x="675" y="111" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">Patient weight</text>
+                                    <path d="M 712 110 L 900 110 L 900 134 A 12 12 0 0 1 888 146 L 700 146 L 700 122 A 12 12 0 0 1 712 110 Z" fill="#253468"/>
+                                    <text x="800" y="132" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">Patient weight</text>
                                 </g>
 
                                 <!-- Level 3: BASE ROW -->
                                 
-                                <!-- Box 1: <2 months -->
+                                <!-- Box 1: <2 months (0.15 mg/kg) -->
                                 <g filter="url(#shadow)">
-                                    <rect x="35" y="180" width="170" height="42" rx="6" fill="#737e93"/>
-                                    <text x="120" y="206" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">0.15 mg/kg X weight (kg)</text>
+                                    <path d="M 82 200 L 250 200 L 250 230 A 12 12 0 0 1 238 242 L 70 242 L 70 212 A 12 12 0 0 1 82 200 Z" fill="#737e93"/>
+                                    <text x="160" y="226" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">0.15 mg/kg X weight (kg)</text>
                                 </g>
 
-                                <!-- Box 2: 2 months to <2 years -->
+                                <!-- Box 2: 2 months to <2 years (0.20 mg/kg) -->
                                 <g filter="url(#shadow)">
-                                    <rect x="235" y="180" width="170" height="42" rx="6" fill="#c92a5e"/>
-                                    <text x="320" y="206" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">0.20 mg/kg X weight (kg)</text>
+                                    <path d="M 402 200 L 570 200 L 570 230 A 12 12 0 0 1 558 242 L 390 242 L 390 212 A 12 12 0 0 1 402 200 Z" fill="#c92a5e"/>
+                                    <text x="480" y="226" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">0.20 mg/kg X weight (kg)</text>
                                 </g>
 
-                                <!-- Box 3: >=2 years & <20 kg -->
+                                <!-- Box 3: >=2 years & <20 kg (0.25 mg/kg) -->
                                 <g filter="url(#shadow)">
-                                    <rect x="490" y="180" width="170" height="42" rx="6" fill="#00a3c4"/>
-                                    <text x="575" y="206" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">0.25 mg/kg X weight (kg)</text>
+                                    <path d="M 637 200 L 795 200 L 795 230 A 12 12 0 0 1 783 242 L 625 242 L 625 212 A 12 12 0 0 1 637 200 Z" fill="#00a3c4"/>
+                                    <text x="710" y="226" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">0.25 mg/kg X weight (kg)</text>
                                 </g>
 
-                                <!-- Box 4: >=2 years & >=20 kg -->
+                                <!-- Box 4: >=2 years & >=20 kg (5 mg) -->
                                 <g filter="url(#shadow)">
-                                    <rect x="730" y="180" width="90" height="42" rx="6" fill="#fdb933"/>
-                                    <text x="775" y="206" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">5 mg</text>
+                                    <path d="M 852 200 L 940 200 L 940 230 A 12 12 0 0 1 928 242 L 840 242 L 840 212 A 12 12 0 0 1 852 200 Z" fill="#fdb933"/>
+                                    <text x="890" y="226" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">5 mg</text>
                                 </g>
                             </svg>
                         </div>
@@ -350,6 +342,7 @@
         let inputMode = 'age';
         let fpInstance = null;
 
+        // Initialize Flatpickr 
         document.addEventListener("DOMContentLoaded", function() {
             fpInstance = flatpickr("#dobInput", {
                 dateFormat: "Y-m-d",
@@ -363,6 +356,7 @@
             });
         });
 
+        // Function to clamp month input
         function handleMonthInput(el) {
             if (el.value !== "") {
                 let val = parseInt(el.value);
@@ -372,6 +366,7 @@
             calculateDose();
         }
 
+        // Function to clear all data
         function clearAllData() {
             document.getElementById('ageYears').value = "";
             document.getElementById('ageMonths').value = "";
@@ -385,6 +380,7 @@
             resetResults();
         }
 
+        // Function to toggle between Age and DOB inputs
         function setInputMode(mode) {
             inputMode = mode;
             const tabAge = document.getElementById('tabAgeBtn');
@@ -414,6 +410,7 @@
             calculateDose();
         }
 
+        // Reset Results function
         function resetResults() {
             document.getElementById('resGroup').innerText = "PLEASE ENTER DATA";
             document.getElementById('resGroup').className = "text-xs font-bold text-slate-500 bg-slate-100 py-2 px-3 rounded-lg border border-slate-200 w-full text-center uppercase tracking-wider transition-colors duration-300";
