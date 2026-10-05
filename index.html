@@ -70,25 +70,7 @@
                             </div>
                             <div class="relative bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 input-focus-ring transition">
                                 <label class="block text-[11px] text-slate-500 font-medium">Month (s) / เดือน</label>
-                                <!-- ใช้ Dropdown สำหรับเดือน เพื่อป้องกันใส่เลขเกิน 11 -->
-                                <select id="ageMonths" onchange="calculateDose()" class="w-full bg-transparent outline-none text-xl font-bold text-slate-800 appearance-none cursor-pointer">
-                                    <option value="0">0</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                </select>
-                                <!-- Dropdown arrow icon -->
-                                <div class="pointer-events-none absolute inset-y-0 right-4 flex items-center pt-4">
-                                    <svg class="h-4 w-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                                </div>
+                                <input type="number" id="ageMonths" oninput="handleMonthInput(this)" inputmode="numeric" min="0" max="11" class="w-full bg-transparent outline-none text-xl font-bold text-slate-800" placeholder="0">
                             </div>
                         </div>
                     </div>
@@ -325,6 +307,16 @@
     <!-- JavaScript Logic -->
     <script>
         let inputMode = 'age'; // 'age' or 'dob'
+
+        // Function to clamp month input
+        function handleMonthInput(el) {
+            if (el.value !== "") {
+                let val = parseInt(el.value);
+                if (val > 11) el.value = 11;
+                if (val < 0) el.value = 0;
+            }
+            calculateDose();
+        }
 
         // Function to toggle between Age and DOB inputs
         function setInputMode(mode) {
