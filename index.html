@@ -21,6 +21,9 @@
         /* ซ่อนลูกศรขึ้นลงในช่องกรอกตัวเลข */
         input[type=number]::-webkit-inner-spin-button, 
         input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        
+        /* เพิ่ม Smooth Scroll สำหรับการกดลิงก์ในหน้าเว็บ */
+        html { scroll-behavior: smooth; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 p-4 md:p-8">
@@ -147,7 +150,7 @@
             </div>
             
             <div class="p-6 space-y-10">
-                <!-- Flowchart Section (สร้างด้วย CSS) -->
+                <!-- Flowchart Section (สร้างด้วย CSS แก้เส้นตรงแล้ว) -->
                 <div class="overflow-x-auto w-full pb-4">
                     <div class="min-w-[700px] flex flex-col items-center font-sans">
                         
@@ -159,61 +162,59 @@
                         <div class="bg-[#253468] text-white px-12 py-2.5 rounded-full font-semibold text-sm shadow-md">Patient age</div>
                         <div class="w-[3px] h-6 bg-[#1d2b5c]"></div>
                         
-                        <!-- Level 2: Horizontal Branch -->
-                        <div class="w-[600px] border-t-[3px] border-[#1d2b5c] relative">
+                        <!-- Level 2: Horizontal Branch (ปรับความกว้างให้ตรงพอดีเป๊ะที่ 440px) -->
+                        <div class="w-[440px] border-t-[3px] border-[#1d2b5c] relative">
                             <div class="w-[3px] h-6 bg-[#1d2b5c] absolute left-0 top-0"></div>
                             <div class="w-[3px] h-6 bg-[#1d2b5c] absolute left-1/2 -translate-x-1/2 top-0"></div>
                             <div class="w-[3px] h-6 bg-[#1d2b5c] absolute right-0 top-0"></div>
                         </div>
                         
-                        <!-- Level 3: Age Labels -->
-                        <div class="w-[680px] flex justify-between mt-6 text-xs font-bold text-slate-800 items-start">
-                            <div class="w-1/3 text-center pr-12">&lt;2 months</div>
-                            <div class="w-1/3 text-center">2 months to<br>&lt;2 years</div>
-                            <div class="w-1/3 text-center pl-12">&ge;2 years</div>
-                        </div>
-                        
-                        <!-- Level 4: Bottom Boxes & Weight Branch -->
-                        <div class="w-[600px] flex justify-between mt-2">
+                        <!-- Level 3 & 4: Columns for Text and Boxes -->
+                        <div class="w-[660px] flex justify-between mt-2">
+                            
                             <!-- Branch <2 months -->
-                            <div class="w-[180px] flex flex-col items-center">
-                                <div class="w-[3px] h-16 bg-[#1d2b5c]"></div>
-                                <div class="bg-[#737e93] text-white w-full py-3.5 rounded-lg text-center text-sm font-semibold shadow-md">0.15 mg/kg X weight (kg)</div>
+                            <div class="w-[220px] flex flex-col items-center">
+                                <div class="text-xs font-bold text-slate-800 mb-2">&lt;2 months</div>
+                                <div class="w-[3px] h-10 bg-[#1d2b5c]"></div>
+                                <div class="bg-[#737e93] text-white w-[180px] py-3.5 rounded-lg text-center text-sm font-semibold shadow-md">0.15 mg/kg X weight (kg)</div>
                             </div>
                             
                             <!-- Branch 2 months to <2 years -->
-                            <div class="w-[180px] flex flex-col items-center">
-                                <div class="w-[3px] h-16 bg-[#1d2b5c]"></div>
-                                <div class="bg-[#cc2962] text-white w-full py-3.5 rounded-lg text-center text-sm font-semibold shadow-md">0.20 mg/kg X weight (kg)</div>
+                            <div class="w-[220px] flex flex-col items-center">
+                                <div class="text-xs font-bold text-slate-800 mb-2 text-center">2 months to<br>&lt;2 years</div>
+                                <div class="w-[3px] h-[16px] bg-[#1d2b5c]"></div>
+                                <div class="bg-[#cc2962] text-white w-[180px] py-3.5 rounded-lg text-center text-sm font-semibold shadow-md mt-[8px]">0.20 mg/kg X weight (kg)</div>
                             </div>
                             
                             <!-- Branch >=2 years (Nested) -->
-                            <div class="w-[200px] flex flex-col items-center">
-                                <div class="w-[3px] h-4 bg-[#1d2b5c]"></div>
-                                <div class="bg-[#253468] text-white px-6 py-2 rounded-full font-semibold text-xs shadow-md w-[85%] text-center">Patient weight</div>
+                            <div class="w-[220px] flex flex-col items-center">
+                                <div class="text-xs font-bold text-slate-800 mb-2">&ge;2 years</div>
+                                <div class="w-[3px] h-3 bg-[#1d2b5c]"></div>
+                                <div class="bg-[#253468] text-white px-6 py-2 rounded-full font-semibold text-xs shadow-md w-[180px] text-center">Patient weight</div>
                                 <div class="w-[3px] h-4 bg-[#1d2b5c]"></div>
                                 
-                                <div class="w-[160px] border-t-[3px] border-[#1d2b5c] relative">
+                                <div class="w-[140px] border-t-[3px] border-[#1d2b5c] relative">
                                     <div class="w-[3px] h-4 bg-[#1d2b5c] absolute left-0 top-0"></div>
                                     <div class="w-[3px] h-4 bg-[#1d2b5c] absolute right-0 top-0"></div>
                                 </div>
                                 
-                                <div class="w-[180px] flex justify-between mt-4 text-[11px] font-bold text-slate-800">
-                                    <div class="w-1/2 text-center pr-4">&lt;20 kg</div>
-                                    <div class="w-1/2 text-center pl-4">&ge;20 kg</div>
+                                <div class="w-[160px] flex justify-between mt-4 text-[11px] font-bold text-slate-800">
+                                    <div class="w-1/2 text-center">&lt;20 kg</div>
+                                    <div class="w-1/2 text-center">&ge;20 kg</div>
                                 </div>
                                 
-                                <div class="w-[180px] flex justify-between mt-1">
-                                    <div class="w-[85px] flex flex-col items-center">
+                                <div class="w-[160px] flex justify-between mt-1">
+                                    <div class="w-[75px] flex flex-col items-center">
                                         <div class="w-[3px] h-4 bg-[#1d2b5c]"></div>
-                                        <div class="bg-[#009fc2] text-white w-full py-3 rounded-lg text-center text-[11px] leading-tight font-semibold shadow-md">0.25 mg/kg X<br>weight (kg)</div>
+                                        <div class="bg-[#009fc2] text-white w-full py-2.5 rounded-lg text-center text-[11px] leading-tight font-semibold shadow-md">0.25 mg/kg X<br>weight (kg)</div>
                                     </div>
-                                    <div class="w-[85px] flex flex-col items-center">
+                                    <div class="w-[75px] flex flex-col items-center">
                                         <div class="w-[3px] h-4 bg-[#1d2b5c]"></div>
-                                        <div class="bg-[#ffbc47] text-white w-full py-3 rounded-lg text-center text-[12px] font-semibold shadow-md flex items-center justify-center h-[52px]">5 mg</div>
+                                        <div class="bg-[#ffbc47] text-white w-full rounded-lg text-center text-[12px] font-semibold shadow-md flex items-center justify-center h-[48px]">5 mg</div>
                                     </div>
                                 </div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
