@@ -3,57 +3,303 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medical Dose Calculator</title>
+    <title>EVRYSDI® (risdiplam) Oral Syringe Calculator</title>
+    <!-- ใช้ Tailwind CSS ผ่าน CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- ฟอนต์ภาษาไทยจาก Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; padding: 20px; max-width: 400px; margin: 0 auto; }
-        .container { background-color: #f9f9f9; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        input { width: 100%; padding: 10px; margin: 10px 0; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
-        button { width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
-        button:hover { background-color: #0056b3; }
-        .result { margin-top: 20px; font-weight: bold; font-size: 18px; color: #333; text-align: center; }
-        .disclaimer { margin-top: 20px; font-size: 12px; color: #d9534f; text-align: center; font-weight: bold; }
+        body { font-family: 'Prompt', sans-serif; }
     </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-800 p-4 md:p-8">
 
-<div class="container">
-    <h2 style="text-align: center;">Dose Calculator</h2>
-    
-    <label for="age">อายุ (ปี):</label>
-    <input type="number" id="age" placeholder="เช่น 35">
+    <div class="max-w-5xl mx-auto">
+        <!-- Header -->
+        <header class="mb-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold text-blue-900">EVRYSDI® <span class="text-xl font-normal text-slate-500">(risdiplam)</span></h1>
+                <p class="text-slate-500 mt-1">Dose Calculator Website for Healthcare Professionals</p>
+            </div>
+            <!-- Logo Placeholder (ถ้ามีโลโก้ใส่ตรงนี้) -->
+            <div class="mt-4 md:mt-0 font-bold text-blue-600 border-2 border-blue-600 px-4 py-2 rounded-full">
+                Roche
+            </div>
+        </header>
 
-    <label for="weight">น้ำหนัก (กิโลกรัม):</label>
-    <input type="number" id="weight" placeholder="เช่น 60">
+        <!-- Main Calculator Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- Patient Input Panel -->
+            <div class="bg-white rounded-2xl shadow-lg border border-pink-200 overflow-hidden">
+                <div class="bg-pink-50 border-b border-pink-100 px-6 py-4">
+                    <h2 class="text-lg font-bold text-pink-700 flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                        Patient Input
+                    </h2>
+                </div>
+                <div class="p-6 space-y-5">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">1.1 Age (อายุ)</label>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs text-slate-500 mb-1">Year (s) / ปี</label>
+                                <input type="number" id="ageYears" min="0" value="0" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-pink-400 outline-none transition" placeholder="0">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-500 mb-1">Month (s) / เดือน</label>
+                                <input type="number" id="ageMonths" min="0" max="11" value="0" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-pink-400 outline-none transition" placeholder="0">
+                            </div>
+                        </div>
+                    </div>
 
-    <button onclick="calculateDose()">คำนวณปริมาณยา</button>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">1.2 Body weight (น้ำหนัก)</label>
+                        <div class="relative">
+                            <input type="number" id="weight" step="0.1" min="0" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-pink-400 outline-none transition" placeholder="ระบุน้ำหนัก">
+                            <span class="absolute right-4 top-2 text-slate-500 font-medium">kg</span>
+                        </div>
+                    </div>
 
-    <div class="result" id="resultText"></div>
+                    <div id="errorMessage" class="hidden bg-red-50 text-red-600 p-3 rounded-lg text-sm">
+                        กรุณาระบุน้ำหนักให้ถูกต้อง
+                    </div>
 
-    <div class="disclaimer">
-        *For Healthcare Professionals Only. This tool is for informational purposes and does not replace professional clinical judgment.
+                    <button onclick="calculateDose()" class="w-full bg-pink-600 hover:bg-pink-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition flex items-center justify-center gap-2 mt-4">
+                        Calculate (คำนวณ)
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Result Panel -->
+            <div class="bg-white rounded-2xl shadow-lg border border-blue-200 overflow-hidden flex flex-col">
+                <div class="bg-blue-50 border-b border-blue-100 px-6 py-4">
+                    <h2 class="text-lg font-bold text-blue-800 flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Result
+                    </h2>
+                </div>
+                
+                <div class="p-6 flex-grow flex flex-col justify-center space-y-6">
+                    <!-- Calculated Group -->
+                    <div>
+                        <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-1">Calculated Group</p>
+                        <div id="resGroup" class="text-sm font-medium text-blue-600 bg-blue-50 py-1.5 px-3 rounded inline-block border border-blue-100">-</div>
+                    </div>
+
+                    <!-- DOSE -->
+                    <div class="border-2 border-slate-700 rounded-xl p-4 relative">
+                        <span class="absolute -top-3 left-4 bg-white px-2 text-xs font-bold text-slate-500 uppercase tracking-wider">DOSE</span>
+                        <div class="text-center">
+                            <span id="resDose" class="text-3xl font-bold text-slate-800">X.XXX</span>
+                            <span class="text-slate-500 font-medium ml-1">mg</span>
+                        </div>
+                    </div>
+
+                    <!-- VOLUME PER DOSE -->
+                    <div class="border-2 border-cyan-400 rounded-xl p-4 relative">
+                        <span class="absolute -top-3 left-4 bg-white px-2 text-xs font-bold text-cyan-600 uppercase tracking-wider">VOLUME PER DOSE <span class="text-[10px] font-normal text-slate-400">(ROUNDED)</span></span>
+                        <div class="text-center">
+                            <span id="resVolume" class="text-3xl font-bold text-cyan-600">X.XX</span>
+                            <span class="text-cyan-600 font-medium ml-1">mL</span>
+                        </div>
+                        <p class="text-[10px] text-center text-slate-400 mt-1">Unrounded: <span id="resVolumeUnrounded">X.XXX</span> mL</p>
+                    </div>
+
+                    <!-- ORAL SYRINGE SIZE -->
+                    <div class="border-2 border-amber-300 rounded-xl p-4 relative">
+                        <span class="absolute -top-3 left-4 bg-white px-2 text-xs font-bold text-amber-600 uppercase tracking-wider">ORAL SYRINGE SIZE</span>
+                        <div class="flex items-center justify-center gap-3">
+                            <span id="resSyringeVol" class="text-2xl font-bold text-slate-800">X mL</span>
+                            <span id="resSyringeColor" class="px-3 py-1 rounded-full text-sm font-semibold flex items-center bg-slate-100 text-slate-500 border border-slate-300">
+                                <span id="resSyringeDot" class="w-3 h-3 rounded-full bg-slate-400 mr-2"></span> Color
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Reference Section -->
+        <div class="mt-8 bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+            <div class="bg-slate-50 border-b border-slate-100 px-6 py-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    ข้อมูลอ้างอิงสำหรับแพทย์ (Clinical Reference)
+                </h2>
+            </div>
+            
+            <div class="p-6 space-y-8">
+                <!-- Dosing Regimen Logic -->
+                <div>
+                    <h3 class="text-md font-semibold text-slate-700 mb-4 pb-2 border-b">1. Dosing regimen by age and body weight</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 text-center">
+                            <p class="text-sm font-medium text-slate-500 mb-2">Patient age < 2 months</p>
+                            <div class="bg-slate-500 text-white text-sm font-bold py-2 px-3 rounded shadow-sm">
+                                0.15 mg/kg X weight (kg)
+                            </div>
+                        </div>
+                        <div class="bg-rose-50 p-4 rounded-lg border border-rose-100 text-center">
+                            <p class="text-sm font-medium text-rose-500 mb-2">2 months to < 2 years</p>
+                            <div class="bg-rose-500 text-white text-sm font-bold py-2 px-3 rounded shadow-sm">
+                                0.20 mg/kg X weight (kg)
+                            </div>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg border border-blue-100 flex flex-col justify-center">
+                            <p class="text-sm font-medium text-blue-600 text-center mb-2">≥ 2 years</p>
+                            <div class="flex gap-2 justify-center">
+                                <div class="text-center w-full">
+                                    <span class="text-xs text-slate-500 block mb-1">< 20 kg</span>
+                                    <div class="bg-cyan-500 text-white text-xs font-bold py-2 px-2 rounded shadow-sm">0.25 mg/kg X weight</div>
+                                </div>
+                                <div class="text-center w-full">
+                                    <span class="text-xs text-slate-500 block mb-1">≥ 20 kg</span>
+                                    <div class="bg-amber-400 text-white text-xs font-bold py-2 px-2 rounded shadow-sm">5 mg</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Syringe Selection Table -->
+                <div>
+                    <h3 class="text-md font-semibold text-slate-700 mb-4 pb-2 border-b">2. Selection of the oral syringe for the prescribed daily dose</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-100 text-slate-700 text-sm">
+                                    <th class="p-3 border-b-2 border-slate-200">Syringe size</th>
+                                    <th class="p-3 border-b-2 border-slate-200">Dosing volume</th>
+                                    <th class="p-3 border-b-2 border-slate-200 text-center">Syringe markings</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm">
+                                <tr class="border-b border-slate-100 hover:bg-slate-50">
+                                    <td class="p-3 flex items-center font-medium">
+                                        1 mL 
+                                        <span class="ml-3 px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 border border-amber-200 text-xs flex items-center"><span class="w-2 h-2 rounded-full bg-amber-500 mr-1.5"></span> Yellow</span>
+                                    </td>
+                                    <td class="p-3 text-slate-600">0.3 mL to 1 mL</td>
+                                    <td class="p-3 text-center text-slate-600 font-mono">0.01 mL</td>
+                                </tr>
+                                <tr class="border-b border-slate-100 hover:bg-slate-50">
+                                    <td class="p-3 flex items-center font-medium">
+                                        6 mL 
+                                        <span class="ml-3 px-2 py-0.5 rounded-full bg-gray-200 text-gray-700 border border-gray-300 text-xs flex items-center"><span class="w-2 h-2 rounded-full bg-gray-500 mr-1.5"></span> Grey</span>
+                                    </td>
+                                    <td class="p-3 text-slate-600">1 mL to 6 mL</td>
+                                    <td class="p-3 text-center text-slate-600 font-mono">0.1 mL</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-3 flex items-center font-medium">
+                                        12 mL 
+                                        <span class="ml-2 px-2 py-0.5 rounded-full bg-orange-900 text-white border border-orange-950 text-xs flex items-center"><span class="w-2 h-2 rounded-full bg-white mr-1.5"></span> Brown</span>
+                                    </td>
+                                    <td class="p-3 text-slate-600">6.2 mL to 6.6 mL</td>
+                                    <td class="p-3 text-center text-slate-600 font-mono">0.2 mL</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-4 italic">Reference 1. Evrysdi® Prescribing Information</p>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 
-<script>
-    function calculateDose() {
-        // ดึงค่าจากช่องกรอก
-        let age = document.getElementById("age").value;
-        let weight = document.getElementById("weight").value;
+    <!-- JavaScript Logic -->
+    <script>
+        function calculateDose() {
+            // Get inputs
+            const years = parseInt(document.getElementById('ageYears').value) || 0;
+            const months = parseInt(document.getElementById('ageMonths').value) || 0;
+            const weight = parseFloat(document.getElementById('weight').value);
+            const errBox = document.getElementById('errorMessage');
 
-        // เช็คว่ากรอกข้อมูลครบไหม
-        if(age === "" || weight === "") {
-            document.getElementById("resultText").innerText = "กรุณากรอกอายุและน้ำหนักให้ครบถ้วน";
-            return;
+            // Validate weight
+            if (isNaN(weight) || weight <= 0) {
+                errBox.classList.remove('hidden');
+                return;
+            } else {
+                errBox.classList.add('hidden');
+            }
+
+            // Calculate total age in months
+            const totalMonths = (years * 12) + months;
+            
+            let dose = 0;
+            let groupText = "";
+
+            // Step 1: Determine Dose Logic
+            if (totalMonths < 2) {
+                dose = 0.15 * weight;
+                groupText = "< 2 months of age";
+            } else if (totalMonths >= 2 && totalMonths < 24) {
+                dose = 0.20 * weight;
+                groupText = "2 months to < 2 years of age";
+            } else if (totalMonths >= 24 && weight < 20) {
+                dose = 0.25 * weight;
+                groupText = "≥ 2 years of age (< 20 kg)";
+            } else if (totalMonths >= 24 && weight >= 20) {
+                dose = 5.0; // Max dose
+                groupText = "≥ 2 years of age (≥ 20 kg)";
+            }
+
+            // Safety limit (Max dose is 5mg)
+            if (dose > 5) dose = 5.0;
+
+            // Step 2: Calculate Volume (Dose / 0.75)
+            const unroundedVolume = dose / 0.75;
+            let roundedVolume = 0;
+            
+            // Step 3: Determine Syringe Size and Rounding
+            let syringeSize = "";
+            let colorClass = "";
+            let dotClass = "";
+            let colorName = "";
+
+            if (unroundedVolume <= 1.0) {
+                // 1 mL syringe, round to 0.01
+                roundedVolume = (Math.round(unroundedVolume * 100) / 100).toFixed(2);
+                syringeSize = "1 mL";
+                colorName = "Yellow";
+                colorClass = "bg-amber-100 text-amber-700 border-amber-200";
+                dotClass = "bg-amber-500";
+            } else if (unroundedVolume > 1.0 && unroundedVolume <= 6.0) {
+                // 6 mL syringe, round to 0.1
+                roundedVolume = (Math.round(unroundedVolume * 10) / 10).toFixed(1);
+                syringeSize = "6 mL";
+                colorName = "Grey";
+                colorClass = "bg-gray-200 text-gray-700 border-gray-300";
+                dotClass = "bg-gray-500";
+            } else {
+                // 12 mL syringe, round to 0.2
+                // Handle max volume cap 6.6 mL
+                let vol = unroundedVolume;
+                if (vol > 6.6) vol = 6.6;
+                roundedVolume = (Math.round(vol * 5) / 5).toFixed(1);
+                syringeSize = "12 mL";
+                colorName = "Brown";
+                colorClass = "bg-orange-900 text-white border-orange-950";
+                dotClass = "bg-white";
+            }
+
+            // Update UI
+            document.getElementById('resGroup').innerText = groupText;
+            document.getElementById('resDose').innerText = dose.toFixed(3);
+            document.getElementById('resVolumeUnrounded').innerText = unroundedVolume.toFixed(3);
+            document.getElementById('resVolume').innerText = roundedVolume;
+            
+            // Syringe UI
+            document.getElementById('resSyringeVol').innerText = syringeSize;
+            
+            const colorEl = document.getElementById('resSyringeColor');
+            colorEl.className = `px-3 py-1 rounded-full text-sm font-semibold flex items-center border ${colorClass}`;
+            colorEl.innerHTML = `<span class="w-3 h-3 rounded-full ${dotClass} mr-2"></span> ${colorName}`;
         }
-
-        // ตัวอย่างสูตรคำนวณ (คุณสามารถเปลี่ยนสูตรตรงนี้ได้เลย)
-        // สมมติ: ปริมาณยา = น้ำหนัก * 2.5 mg
-        let dose = weight * 2.5;
-
-        // แสดงผล
-        document.getElementById("resultText").innerText = "ปริมาณแนะนำ: " + dose + " mg";
-    }
-</script>
-
+    </script>
 </body>
 </html>
