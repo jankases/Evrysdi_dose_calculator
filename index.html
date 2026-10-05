@@ -200,90 +200,91 @@
             
             <div class="p-8 space-y-10">
                 
-                <!-- Flowchart Section (วาดกล่องทรงใบไม้, ย้ายกล่อง Patient weight ไปตรงกลาง และจัดตัวอักษรไม่ทับเส้น) -->
+                <!-- Flowchart Section (ปรับระยะห่างให้สมดุล กล่องไม่เบียดกัน) -->
                 <div>
                     <h3 class="text-[17px] font-bold text-[#1d2b5c] mb-6">
                         Dosing regimen by age and body weight<sup class="text-[11px]">1</sup>
                     </h3>
                     
                     <div class="w-full pb-4 flex justify-center">
-                        <svg viewBox="0 0 960 260" class="w-full max-w-[960px] h-auto font-sans" xmlns="http://www.w3.org/2000/svg">
+                        <!-- ขยาย Canvas เป็น 1080 เพื่อลดความแออัดฝั่งขวา -->
+                        <svg viewBox="0 0 1080 260" class="w-full max-w-[1080px] h-auto font-sans" xmlns="http://www.w3.org/2000/svg">
                             <defs>
                                 <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%">
                                     <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.12"/>
                                 </filter>
                             </defs>
 
-                            <!-- Connecting Lines (โครงสร้าง Bracket แยกเส้น ซ้าย-ขวา) -->
+                            <!-- Connecting Lines (โครงสร้าง Bracket ปรับพิกัดใหม่ให้สมดุล) -->
                             <g stroke="#1d2b5c" stroke-width="2.5" fill="none">
                                 
                                 <!-- Bracket ซ้าย: จากมุมซ้ายล่าง Patient age -> ลากซ้าย -> ลง Box 1 -->
-                                <path d="M 390 41 L 390 80 L 180 80 L 180 199" />
-                                <path d="M 390 80 L 425 80" /> <!-- เส้นแนวนอนยื่นเข้าหาช่องว่างตรงกลาง -->
+                                <path d="M 475 44 L 475 80 L 180 80 L 180 199" />
+                                <path d="M 475 80 L 500 80" /> <!-- เส้นแนวนอนยื่นเข้าหาช่องว่างตรงกลาง -->
                                 
                                 <!-- Bracket ขวา: จากมุมขวาล่าง Patient age -> ลากขวา -> ลง Patient weight -->
-                                <path d="M 570 41 L 570 80 L 740 80 L 740 119" />
-                                <path d="M 570 80 L 535 80" /> <!-- เส้นแนวนอนยื่นเข้าหาช่องว่างตรงกลาง -->
+                                <path d="M 605 44 L 605 80 L 900 80 L 900 119" />
+                                <path d="M 605 80 L 580 80" /> <!-- เส้นแนวนอนยื่นเข้าหาช่องว่างตรงกลาง -->
 
                                 <!-- กิ่งกลาง: เส้นดิ่งลงมาจากช่องว่างใต้ข้อความ -->
-                                <path d="M 480 110 L 480 199" />
+                                <path d="M 540 110 L 540 199" />
 
-                                <!-- โครงสร้างใต้ Patient weight (ขยายกว้าง ไม่เบียด) -->
-                                <path d="M 785 151 L 785 175" />
-                                <path d="M 675 175 L 890 175" />
-                                <path d="M 675 175 L 675 199" />
-                                <path d="M 890 175 L 890 199" />
+                                <!-- โครงสร้างใต้ Patient weight (กางแขนกว้างขึ้นให้กล่องสีฟ้ากับชมพูห่างกัน) -->
+                                <path d="M 900 151 L 900 175" />
+                                <path d="M 800 175 L 1000 175" />
+                                <path d="M 800 175 L 800 199" />
+                                <path d="M 1000 175 L 1000 199" />
                             </g>
 
-                            <!-- Text Labels (จัดให้อยู่เหนือเส้นทั้งหมด ไม่มีเส้นบังหรือทับตัวอักษร) -->
+                            <!-- Text Labels (จัดให้อยู่เหนือเส้นทั้งหมด) -->
                             <g font-size="12" font-weight="bold" fill="#1d2b5c" text-anchor="middle">
-                                <text x="180" y="73">&lt;2 months</text>
-                                <text x="480" y="65">2 months to</text>
-                                <text x="480" y="79">&lt;2 years</text>
-                                <text x="740" y="73">&ge;2 years</text>
+                                <text x="180" y="73" stroke="#ffffff" stroke-width="6" paint-order="stroke fill">&lt;2 months</text>
+                                <text x="540" y="65" stroke="#ffffff" stroke-width="6" paint-order="stroke fill">2 months to</text>
+                                <text x="540" y="79" stroke="#ffffff" stroke-width="6" paint-order="stroke fill">&lt;2 years</text>
+                                <text x="900" y="73" stroke="#ffffff" stroke-width="6" paint-order="stroke fill">&ge;2 years</text>
                                 
-                                <text x="730" y="168">&lt;20 kg</text>
-                                <text x="840" y="168">&ge;20 kg</text>
+                                <text x="800" y="168" stroke="#ffffff" stroke-width="6" paint-order="stroke fill">&lt;20 kg</text>
+                                <text x="1000" y="168" stroke="#ffffff" stroke-width="6" paint-order="stroke fill">&ge;20 kg</text>
                             </g>
 
-                            <!-- กล่องรูปทรงใบไม้ Leaf Shape (โค้งมุมบนซ้าย ล่างขวา / เหลี่ยมมุมบนขวา ล่างซ้าย) -->
+                            <!-- กล่องรูปทรงใบไม้ Leaf Shape -->
                             
                             <!-- Level 1: Patient age -->
                             <g filter="url(#shadow)">
-                                <path d="M 382 9 L 590 9 L 590 29 A 12 12 0 0 1 578 41 L 370 41 L 370 21 A 12 12 0 0 1 382 9 Z" fill="#253468"/>
-                                <text x="480" y="30" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">Patient age</text>
+                                <path d="M 477 9 L 615 9 L 615 29 A 12 12 0 0 1 603 41 L 465 41 L 465 21 A 12 12 0 0 1 477 9 Z" fill="#253468"/>
+                                <text x="540" y="30" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">Patient age</text>
                             </g>
 
-                            <!-- Level 2: Patient weight (จัดให้อยู่ตรงกลางเป๊ะ) -->
+                            <!-- Level 2: Patient weight (ขยับไปทางขวา ไม่เบียดกับสีชมพู) -->
                             <g filter="url(#shadow)">
-                                <path d="M 687 119 L 895 119 L 895 139 A 12 12 0 0 1 883 151 L 675 151 L 675 131 A 12 12 0 0 1 687 119 Z" fill="#253468"/>
-                                <text x="785" y="140" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">Patient weight</text>
+                                <path d="M 837 119 L 975 119 L 975 139 A 12 12 0 0 1 963 151 L 825 151 L 825 131 A 12 12 0 0 1 837 119 Z" fill="#253468"/>
+                                <text x="900" y="140" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">Patient weight</text>
                             </g>
 
                             <!-- Level 3: BASE ROW -->
                             
                             <!-- Box 1: <2 months (0.15 mg/kg) -->
                             <g filter="url(#shadow)">
-                                <path d="M 97 199 L 275 199 L 275 229 A 12 12 0 0 1 263 241 L 85 241 L 85 211 A 12 12 0 0 1 97 199 Z" fill="#737e93"/>
+                                <path d="M 107 199 L 265 199 L 265 229 A 12 12 0 0 1 253 241 L 95 241 L 95 211 A 12 12 0 0 1 107 199 Z" fill="#737e93"/>
                                 <text x="180" y="224" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">0.15 mg/kg X weight (kg)</text>
                             </g>
 
                             <!-- Box 2: 2 months to <2 years (0.20 mg/kg) -->
                             <g filter="url(#shadow)">
-                                <path d="M 397 199 L 575 199 L 575 229 A 12 12 0 0 1 563 241 L 385 241 L 385 211 A 12 12 0 0 1 397 199 Z" fill="#c92a5e"/>
-                                <text x="480" y="224" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">0.20 mg/kg X weight (kg)</text>
+                                <path d="M 467 199 L 625 199 L 625 229 A 12 12 0 0 1 613 241 L 455 241 L 455 211 A 12 12 0 0 1 467 199 Z" fill="#c92a5e"/>
+                                <text x="540" y="224" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">0.20 mg/kg X weight (kg)</text>
                             </g>
 
                             <!-- Box 3: >=2 years & <20 kg (0.25 mg/kg) -->
                             <g filter="url(#shadow)">
-                                <path d="M 592 199 L 770 199 L 770 229 A 12 12 0 0 1 758 241 L 580 241 L 580 211 A 12 12 0 0 1 592 199 Z" fill="#00a3c4"/>
-                                <text x="675" y="224" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">0.25 mg/kg X weight (kg)</text>
+                                <path d="M 727 199 L 885 199 L 885 229 A 12 12 0 0 1 873 241 L 715 241 L 715 211 A 12 12 0 0 1 727 199 Z" fill="#00a3c4"/>
+                                <text x="800" y="224" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">0.25 mg/kg X weight (kg)</text>
                             </g>
 
                             <!-- Box 4: >=2 years & >=20 kg (5 mg) -->
                             <g filter="url(#shadow)">
-                                <path d="M 852 199 L 940 199 L 940 229 A 12 12 0 0 1 928 241 L 840 241 L 840 211 A 12 12 0 0 1 852 199 Z" fill="#fdb933"/>
-                                <text x="890" y="224" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">5 mg</text>
+                                <path d="M 967 199 L 1045 199 L 1045 229 A 12 12 0 0 1 1033 241 L 955 241 L 955 211 A 12 12 0 0 1 967 199 Z" fill="#fdb933"/>
+                                <text x="1000" y="224" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">5 mg</text>
                             </g>
                         </svg>
                     </div>
