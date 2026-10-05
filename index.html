@@ -25,6 +25,7 @@
         input[type=number]::-webkit-inner-spin-button, 
         input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
         html { scroll-behavior: smooth; }
+        .no-vertical-scroll { overflow-y: hidden !important; }
         
         .premium-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01); }
         .input-focus-ring:focus-within { outline: 2px solid #ec4899; outline-offset: -1px; }
@@ -199,75 +200,76 @@
             
             <div class="p-8 space-y-10">
                 
-                <!-- Flowchart Section (เรนเดอร์ด้วย SVG เวกเตอร์แบบภาพต้นฉบับเป๊ะ 100% ไม่มีหลุด) -->
+                <!-- Flowchart Section (ปรับระดับ Y ให้กล่องทั้ง 4 วางบนระนาบแนวนอนเดียวกัน 100% ตรงตามต้นฉบับ) -->
                 <div>
                     <h3 class="text-[17px] font-bold text-[#1d2b5c] mb-6">
                         Dosing regimen by age and body weight<sup class="text-[11px]">1</sup>
                     </h3>
                     
                     <div class="overflow-x-auto no-vertical-scroll w-full pb-4">
-                        <div class="min-w-[800px] flex justify-center">
-                            <svg width="800" height="230" viewBox="0 0 800 230" xmlns="http://www.w3.org/2000/svg" class="font-sans">
+                        <div class="min-w-[840px] flex justify-center">
+                            <svg width="840" height="260" viewBox="0 0 840 260" xmlns="http://www.w3.org/2000/svg" class="font-sans">
                                 <defs>
                                     <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%">
                                         <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.12"/>
                                     </filter>
                                 </defs>
 
-                                <!-- Connecting Lines -->
+                                <!-- Connecting Lines (เส้นเชื่อมโครงสร้าง) -->
                                 <g stroke="#1d2b5c" stroke-width="2.5" fill="none">
                                     <!-- Main Tree Lines -->
-                                    <path d="M 400 45 L 400 70 M 200 70 L 600 70 M 200 70 L 200 110 M 400 70 L 400 110 M 600 70 L 600 95" />
-                                    <!-- Sub Tree Lines (Patient weight) -->
-                                    <path d="M 600 135 L 600 155 M 520 155 L 680 155 M 520 155 L 520 180 M 680 155 L 680 180" />
+                                    <path d="M 420 42 L 420 68 M 120 68 L 720 68 M 120 68 L 120 180 M 320 68 L 320 180 M 720 68 L 720 90" />
+                                    <!-- Sub Tree Lines (Patient weight -> 2 กิ่งล่าง) -->
+                                    <path d="M 720 122 L 720 148 M 580 148 L 780 148 M 580 148 L 580 180 M 780 148 L 780 180" />
                                 </g>
 
-                                <!-- Text Labels on Lines -->
+                                <!-- Text Labels on Lines (ข้อความบนเส้น) -->
                                 <g font-size="12" font-weight="bold" fill="#1d2b5c" text-anchor="middle">
-                                    <text x="200" y="65">1</text> <!-- Placeholder clear -->
-                                    <text x="200" y="62" fill="#1d2b5c" stroke="#ffffff" stroke-width="4" paint-order="stroke fill">&lt;2 months</text>
-                                    <text x="400" y="56" fill="#1d2b5c" stroke="#ffffff" stroke-width="4" paint-order="stroke fill">2 months to</text>
-                                    <text x="400" y="68" fill="#1d2b5c" stroke="#ffffff" stroke-width="4" paint-order="stroke fill">&lt;2 years</text>
-                                    <text x="600" y="62" fill="#1d2b5c" stroke="#ffffff" stroke-width="4" paint-order="stroke fill">&ge;2 years</text>
+                                    <text x="120" y="60" fill="#1d2b5c" stroke="#ffffff" stroke-width="4" paint-order="stroke fill">&lt;2 months</text>
+                                    <text x="320" y="54" fill="#1d2b5c" stroke="#ffffff" stroke-width="4" paint-order="stroke fill">2 months to</text>
+                                    <text x="320" y="66" fill="#1d2b5c" stroke="#ffffff" stroke-width="4" paint-order="stroke fill">&lt;2 years</text>
+                                    <text x="720" y="60" fill="#1d2b5c" stroke="#ffffff" stroke-width="4" paint-order="stroke fill">&ge;2 years</text>
                                     
-                                    <text x="520" y="150" fill="#1d2b5c" stroke="#ffffff" stroke-width="4" paint-order="stroke fill">&lt;20 kg</text>
-                                    <text x="680" y="150" fill="#1d2b5c" stroke="#ffffff" stroke-width="4" paint-order="stroke fill">&ge;20 kg</text>
+                                    <text x="580" y="142" fill="#1d2b5c" stroke="#ffffff" stroke-width="4" paint-order="stroke fill">&lt;20 kg</text>
+                                    <text x="780" y="142" fill="#1d2b5c" stroke="#ffffff" stroke-width="4" paint-order="stroke fill">&ge;20 kg</text>
                                 </g>
 
                                 <!-- Level 1: Patient age -->
                                 <g filter="url(#shadow)">
-                                    <rect x="325" y="15" width="150" height="32" rx="16" fill="#253468"/>
-                                    <text x="400" y="36" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">Patient age</text>
+                                    <rect x="345" y="10" width="150" height="32" rx="16" fill="#253468"/>
+                                    <text x="420" y="31" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">Patient age</text>
                                 </g>
 
-                                <!-- Level 2: Left Result (<2 months) -->
+                                <!-- Level 2: Middle Box (Patient weight) -->
                                 <g filter="url(#shadow)">
-                                    <rect x="115" y="110" width="170" height="42" rx="10" fill="#737e93"/>
-                                    <text x="200" y="136" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">0.15 mg/kg X weight (kg)</text>
+                                    <rect x="645" y="90" width="150" height="32" rx="16" fill="#253468"/>
+                                    <text x="720" y="111" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">Patient weight</text>
                                 </g>
 
-                                <!-- Level 2: Middle Result (2 months to <2 years) -->
+                                <!-- Level 3: BASE ROW (กล่องคำตอบทั้ง 4 วางบนระนาบ Y=180 เดียวกันทั้งหมด) -->
+                                
+                                <!-- Box 1: <2 months (0.15 mg/kg) -->
                                 <g filter="url(#shadow)">
-                                    <rect x="315" y="110" width="170" height="42" rx="10" fill="#c92a5e"/>
-                                    <text x="400" y="136" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">0.20 mg/kg X weight (kg)</text>
+                                    <rect x="35" y="180" width="170" height="42" rx="10" fill="#737e93"/>
+                                    <text x="120" y="206" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">0.15 mg/kg X weight (kg)</text>
                                 </g>
 
-                                <!-- Level 2: Right Box (Patient weight) -->
+                                <!-- Box 2: 2 months to <2 years (0.20 mg/kg) -->
                                 <g filter="url(#shadow)">
-                                    <rect x="525" y="95" width="150" height="32" rx="16" fill="#253468"/>
-                                    <text x="600" y="116" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">Patient weight</text>
+                                    <rect x="235" y="180" width="170" height="42" rx="10" fill="#c92a5e"/>
+                                    <text x="320" y="206" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">0.20 mg/kg X weight (kg)</text>
                                 </g>
 
-                                <!-- Level 3: Right Sub Result 1 (<20 kg) -->
+                                <!-- Box 3: >=2 years & <20 kg (0.25 mg/kg) -->
                                 <g filter="url(#shadow)">
-                                    <rect x="435" y="170" width="170" height="38" rx="10" fill="#00a3c4"/>
-                                    <text x="520" y="194" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">0.25 mg/kg X weight (kg)</text>
+                                    <rect x="495" y="180" width="170" height="42" rx="10" fill="#00a3c4"/>
+                                    <text x="580" y="206" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">0.25 mg/kg X weight (kg)</text>
                                 </g>
 
-                                <!-- Level 3: Right Sub Result 2 (>=20 kg) -->
+                                <!-- Box 4: >=2 years & >=20 kg (5 mg) -->
                                 <g filter="url(#shadow)">
-                                    <rect x="645" y="170" width="70" height="38" rx="10" fill="#fdb933"/>
-                                    <text x="680" y="194" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">5 mg</text>
+                                    <rect x="735" y="180" width="90" height="42" rx="10" fill="#fdb933"/>
+                                    <text x="780" y="206" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">5 mg</text>
                                 </g>
                             </svg>
                         </div>
