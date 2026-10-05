@@ -32,13 +32,13 @@
         <!-- Header -->
         <header class="mb-6 text-center md:text-left flex flex-col md:flex-row justify-between items-center bg-white p-6 rounded-2xl premium-shadow border border-slate-100">
             <div class="flex flex-col items-center md:items-start">
-                <!-- โลโก้ Evrysdi -->
-                <img src="Evrysdi_logo.png" alt="EVRYSDI® (risdiplam)" class="h-10 md:h-14 object-contain mb-2">
+                <!-- ขยายขนาดโลโก้ Evrysdi ให้ใหญ่ขึ้น -->
+                <img src="Evrysdi_logo.png" alt="EVRYSDI® (risdiplam)" class="h-16 md:h-20 object-contain mb-3">
                 <p class="text-slate-500 text-sm md:text-base font-medium">Dose Calculator Website for Healthcare Professionals</p>
             </div>
             <div class="mt-4 md:mt-0">
-                <!-- โลโก้ Roche -->
-                <img src="roche_logo.png" alt="Roche" class="h-12 md:h-16 object-contain">
+                <!-- ลดขนาดโลโก้ Roche ให้เล็กลง -->
+                <img src="roche_logo.png" alt="Roche" class="h-8 md:h-10 object-contain">
             </div>
         </header>
 
@@ -137,7 +137,7 @@
                     <!-- DOSE & VOLUME -->
                     <div class="grid grid-cols-2 gap-4">
                         <!-- DOSE -->
-                        <div class="border-2 border-slate-200 rounded-xl p-4 relative bg-white flex flex-col justify-center items-center">
+                        <div class="border-2 border-slate-200 rounded-xl p-4 relative bg-white flex flex-col justify-center items-center shadow-sm">
                             <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-700 px-3 py-0.5 rounded-full text-[10px] font-bold text-white uppercase tracking-wider shadow-sm">DOSE</span>
                             <div class="mt-2 text-center">
                                 <span id="resDose" class="text-3xl font-bold text-slate-800 transition-all">0.000</span>
@@ -146,18 +146,18 @@
                         </div>
 
                         <!-- VOLUME PER DOSE -->
-                        <div class="border-2 border-cyan-200 rounded-xl p-4 relative bg-cyan-50/30 flex flex-col justify-center items-center">
-                            <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-cyan-500 px-3 py-0.5 rounded-full text-[10px] font-bold text-white uppercase tracking-wider shadow-sm">VOLUME</span>
+                        <div class="border-2 border-slate-200 rounded-xl p-4 relative bg-white flex flex-col justify-center items-center shadow-sm">
+                            <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-700 px-3 py-0.5 rounded-full text-[10px] font-bold text-white uppercase tracking-wider shadow-sm">VOLUME</span>
                             <div class="mt-2 text-center">
-                                <span id="resVolume" class="text-3xl font-bold text-cyan-600 transition-all">0.00</span>
-                                <span class="text-cyan-600 font-medium ml-1">mL</span>
+                                <span id="resVolume" class="text-3xl font-bold text-slate-800 transition-all">0.00</span>
+                                <span class="text-slate-500 font-medium ml-1">mL</span>
                             </div>
-                            <p class="text-[10px] text-center text-cyan-700 mt-1 font-medium">Unrounded: <span id="resVolumeUnrounded">0.000</span> mL</p>
+                            <p class="text-[10px] text-center text-slate-400 mt-1 font-medium">Unrounded: <span id="resVolumeUnrounded">0.000</span> mL</p>
                         </div>
                     </div>
 
                     <!-- ORAL SYRINGE SIZE (Dynamic Color Card) -->
-                    <div id="syringeCard" class="border-2 border-slate-200 rounded-xl p-5 relative bg-slate-50 flex items-center justify-between transition-colors duration-500 h-28">
+                    <div id="syringeCard" class="border-2 border-slate-200 rounded-xl p-5 relative bg-slate-50 flex items-center justify-between transition-colors duration-500 h-28 shadow-sm">
                         <span class="absolute -top-3 left-4 bg-white border border-slate-200 px-3 py-0.5 rounded-full text-[10px] font-bold text-slate-600 uppercase tracking-wider shadow-sm" id="syringeBadgeTitle">ORAL SYRINGE SIZE</span>
                         
                         <div class="flex flex-col z-10">
@@ -172,7 +172,8 @@
                         
                         <!-- Syringe Image Graphic -->
                         <div class="w-40 h-full flex items-center justify-end relative" id="syringeGraphic">
-                            <img id="syringeImage" src="" alt="Syringe" class="max-w-full max-h-full object-contain hidden transition-opacity duration-300">
+                            <!-- เพิ่ม class mix-blend-multiply เพื่อตัดพื้นหลังสีขาวของภาพกระบอกฉีดยาออกอัตโนมัติ -->
+                            <img id="syringeImage" src="" alt="Syringe" class="max-w-full max-h-full object-contain hidden transition-opacity duration-300 mix-blend-multiply">
                         </div>
 
                     </div>
@@ -371,7 +372,7 @@
             document.getElementById('syringeText').innerText = "Please enter patient data";
             
             const card = document.getElementById('syringeCard');
-            card.className = "border-2 border-slate-200 rounded-xl p-5 relative bg-slate-50 flex items-center justify-between transition-colors duration-500 h-28";
+            card.className = "border-2 border-slate-200 rounded-xl p-5 relative bg-slate-50 flex items-center justify-between transition-colors duration-500 h-28 shadow-sm";
             document.getElementById('syringeBadgeTitle').className = "absolute -top-3 left-4 bg-white border border-slate-200 px-3 py-0.5 rounded-full text-[10px] font-bold text-slate-600 uppercase tracking-wider shadow-sm";
             
             const colorEl = document.getElementById('resSyringeColor');
@@ -514,7 +515,7 @@
             document.getElementById('syringeText').innerText = `Increment: ${syringeSize === '1 mL' ? '0.01' : (syringeSize === '6 mL' ? '0.1' : '0.2')} mL`;
             
             const card = document.getElementById('syringeCard');
-            card.className = `border-2 rounded-xl p-5 relative flex items-center justify-between transition-colors duration-500 h-28 ${cardBgClass}`;
+            card.className = `border-2 rounded-xl p-5 relative flex items-center justify-between transition-colors duration-500 h-28 shadow-sm ${cardBgClass}`;
             
             document.getElementById('syringeBadgeTitle').className = `absolute -top-3 left-4 bg-white border px-3 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-sm ${cardBgClass.split(' ')[1]} text-slate-700`;
 
