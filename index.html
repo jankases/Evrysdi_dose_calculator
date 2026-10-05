@@ -16,27 +16,27 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Prompt', sans-serif; }
+        body { font-family: 'Prompt', sans-serif; background-color: #f8fafc; }
         input[type=number]::-webkit-inner-spin-button, 
         input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
         html { scroll-behavior: smooth; }
+        .no-vertical-scroll { overflow-y: hidden !important; }
         
-        /* Custom scrollbar for horizontal only if needed */
-        .no-vertical-scroll {
-            overflow-y: hidden !important;
-        }
+        /* Premium Soft Shadows */
+        .premium-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01); }
+        .input-focus-ring:focus-within { outline: 2px solid #ec4899; outline-offset: -1px; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 p-4 md:p-8">
+<body class="text-slate-800 p-4 md:p-8">
 
     <div class="max-w-5xl mx-auto">
         <!-- Header -->
-        <header class="mb-6 text-center md:text-left flex flex-col md:flex-row justify-between items-center bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+        <header class="mb-6 text-center md:text-left flex flex-col md:flex-row justify-between items-center bg-white p-6 rounded-2xl premium-shadow border border-slate-100">
             <div>
                 <h1 class="text-2xl md:text-3xl font-bold text-blue-900">EVRYSDI® <span class="text-xl font-normal text-slate-500">(risdiplam)</span></h1>
-                <p class="text-slate-500 mt-1 text-sm md:text-base">Dose Calculator Website for Healthcare Professionals</p>
+                <p class="text-slate-500 mt-1 text-sm md:text-base font-medium">Dose Calculator Website for Healthcare Professionals</p>
             </div>
-            <div class="mt-4 md:mt-0 font-bold text-blue-600 border-2 border-blue-600 px-5 py-2 rounded-full bg-blue-50">
+            <div class="mt-4 md:mt-0 font-bold text-blue-600 border-2 border-blue-600 px-6 py-2 rounded-full bg-blue-50">
                 Roche
             </div>
         </header>
@@ -45,95 +45,153 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             
             <!-- Patient Input Panel -->
-            <div class="bg-white rounded-2xl shadow-lg border border-pink-200 overflow-hidden">
-                <div class="bg-pink-50 border-b border-pink-100 px-6 py-4 flex justify-between items-center">
-                    <h2 class="text-lg font-bold text-pink-700 flex items-center">
+            <div class="bg-white rounded-2xl premium-shadow border border-slate-100 overflow-hidden flex flex-col">
+                <div class="bg-pink-50/50 border-b border-pink-100 px-6 py-4 flex justify-between items-center">
+                    <h2 class="text-lg font-bold text-pink-600 flex items-center">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                         Patient Input
                     </h2>
                 </div>
-                <div class="p-6 space-y-5">
-                    <div>
+                
+                <div class="p-6 space-y-6 flex-grow">
+                    <!-- Toggle Age vs DOB -->
+                    <div class="bg-slate-100 p-1 rounded-xl flex space-x-1">
+                        <button id="tabAgeBtn" onclick="setInputMode('age')" class="flex-1 py-2 rounded-lg text-sm font-bold transition-all bg-white text-pink-600 shadow-sm">ระบุอายุ (Age)</button>
+                        <button id="tabDobBtn" onclick="setInputMode('dob')" class="flex-1 py-2 rounded-lg text-sm font-bold transition-all text-slate-500 hover:text-slate-700">เลือกวันเกิด (D.O.B)</button>
+                    </div>
+
+                    <!-- 1.1 Age Inputs (Show/Hide based on tab) -->
+                    <div id="ageInputContainer" class="block">
                         <label class="block text-sm font-semibold text-slate-700 mb-2">1.1 Age (อายุ)</label>
                         <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs text-slate-500 mb-1">Year (s) / ปี</label>
-                                <input type="number" id="ageYears" inputmode="numeric" min="0" value="0" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-pink-400 outline-none transition text-lg font-medium" placeholder="0">
+                            <div class="relative bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 input-focus-ring transition">
+                                <label class="block text-[11px] text-slate-500 font-medium">Year (s) / ปี</label>
+                                <input type="number" id="ageYears" oninput="calculateDose()" inputmode="numeric" min="0" class="w-full bg-transparent outline-none text-xl font-bold text-slate-800" placeholder="0">
                             </div>
-                            <div>
-                                <label class="block text-xs text-slate-500 mb-1">Month (s) / เดือน</label>
-                                <input type="number" id="ageMonths" inputmode="numeric" min="0" max="11" value="0" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-pink-400 outline-none transition text-lg font-medium" placeholder="0">
+                            <div class="relative bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 input-focus-ring transition">
+                                <label class="block text-[11px] text-slate-500 font-medium">Month (s) / เดือน</label>
+                                <!-- ใช้ Dropdown สำหรับเดือน เพื่อป้องกันใส่เลขเกิน 11 -->
+                                <select id="ageMonths" onchange="calculateDose()" class="w-full bg-transparent outline-none text-xl font-bold text-slate-800 appearance-none cursor-pointer">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                </select>
+                                <!-- Dropdown arrow icon -->
+                                <div class="pointer-events-none absolute inset-y-0 right-4 flex items-center pt-4">
+                                    <svg class="h-4 w-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                </div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- 1.1 Date of Birth Input (Hidden by default) -->
+                    <div id="dobInputContainer" class="hidden">
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">1.1 Date of Birth (วันเกิด)</label>
+                        <div class="relative bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 input-focus-ring transition">
+                            <label class="block text-[11px] text-slate-500 font-medium">เลือกวันที่</label>
+                            <input type="date" id="dobInput" onchange="calculateDose()" class="w-full bg-transparent outline-none text-lg font-bold text-slate-800 py-1">
+                        </div>
+                        <p id="calculatedAgeDisplay" class="text-xs text-pink-600 mt-2 font-medium"></p>
+                    </div>
+
+                    <!-- 1.2 Body weight -->
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 mb-2">1.2 Body weight (น้ำหนัก)</label>
-                        <div class="relative">
-                            <input type="number" id="weight" inputmode="decimal" step="0.1" min="0" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-pink-400 outline-none transition text-lg font-medium" placeholder="ระบุน้ำหนัก">
-                            <span class="absolute right-4 top-3.5 text-slate-500 font-medium">kg</span>
+                        <div class="relative bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 input-focus-ring transition flex items-center">
+                            <div class="flex-grow">
+                                <label class="block text-[11px] text-slate-500 font-medium">ระบุน้ำหนักตัว</label>
+                                <input type="number" id="weight" oninput="calculateDose()" inputmode="decimal" step="0.1" min="0" class="w-full bg-transparent outline-none text-2xl font-bold text-slate-800" placeholder="0.0">
+                            </div>
+                            <span class="text-slate-400 font-bold text-lg px-2">kg</span>
                         </div>
                     </div>
 
-                    <div id="errorMessage" class="hidden bg-red-50 text-red-600 p-3 rounded-lg text-sm font-medium border border-red-200">
-                        กรุณาระบุน้ำหนักให้ถูกต้อง
+                    <!-- Auto-calculate info instead of button -->
+                    <div class="bg-blue-50 text-blue-600 p-3 rounded-xl text-sm font-medium flex items-center justify-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        ระบบคำนวณผลลัพธ์ให้อัตโนมัติ (Real-time Calculation)
                     </div>
-
-                    <button onclick="calculateDose()" class="w-full bg-pink-600 hover:bg-pink-700 text-white font-bold py-3.5 px-4 rounded-lg shadow-md transition flex items-center justify-center gap-2 mt-4 text-lg">
-                        Calculate (คำนวณ)
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
-                    </button>
                     
-                    <div class="text-center mt-2">
-                        <a href="#reference" class="text-xs text-blue-500 hover:underline">ℹ️ ดูเกณฑ์การให้ยาด้านล่าง</a>
+                    <div class="text-center mt-4">
+                        <a href="#reference" class="text-xs text-blue-500 hover:underline font-medium">ℹ️ ดูเกณฑ์การให้ยาด้านล่าง</a>
                     </div>
                 </div>
             </div>
 
             <!-- Result Panel -->
-            <div class="bg-white rounded-2xl shadow-lg border border-blue-200 overflow-hidden flex flex-col">
-                <div class="bg-blue-50 border-b border-blue-100 px-6 py-4">
-                    <h2 class="text-lg font-bold text-blue-800 flex items-center">
+            <div class="bg-white rounded-2xl premium-shadow border border-slate-100 overflow-hidden flex flex-col">
+                <div class="bg-blue-50/50 border-b border-blue-100 px-6 py-4">
+                    <h2 class="text-lg font-bold text-blue-700 flex items-center">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         Result
                     </h2>
                 </div>
                 
-                <div class="p-6 flex-grow flex flex-col justify-center space-y-6">
+                <div class="p-6 flex-grow flex flex-col justify-center space-y-5">
+                    
                     <!-- Calculated Group -->
                     <div>
-                        <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-1">Calculated Group</p>
-                        <div id="resGroup" class="text-sm font-medium text-blue-600 bg-blue-50 py-1.5 px-3 rounded inline-block border border-blue-100 w-full text-center">-</div>
-                    </div>
-
-                    <!-- DOSE -->
-                    <div class="border-2 border-slate-700 rounded-xl p-4 relative bg-slate-50">
-                        <span class="absolute -top-3 left-4 bg-slate-700 px-3 py-0.5 rounded text-[10px] font-bold text-white uppercase tracking-wider">DOSE</span>
-                        <div class="text-center">
-                            <span id="resDose" class="text-3xl font-bold text-slate-800">X.XXX</span>
-                            <span class="text-slate-500 font-medium ml-1">mg</span>
+                        <div id="resGroup" class="text-xs font-bold text-slate-500 bg-slate-100 py-2 px-3 rounded-lg border border-slate-200 w-full text-center uppercase tracking-wider transition-colors duration-300">
+                            PLEASE ENTER DATA
                         </div>
                     </div>
 
-                    <!-- VOLUME PER DOSE -->
-                    <div class="border-2 border-cyan-500 rounded-xl p-4 relative bg-cyan-50">
-                        <span class="absolute -top-3 left-4 bg-cyan-500 px-3 py-0.5 rounded text-[10px] font-bold text-white uppercase tracking-wider">VOLUME PER DOSE <span class="font-normal opacity-80">(ROUNDED)</span></span>
-                        <div class="text-center mt-1">
-                            <span id="resVolume" class="text-3xl font-bold text-cyan-600">X.XX</span>
-                            <span class="text-cyan-600 font-medium ml-1">mL</span>
+                    <!-- DOSE & VOLUME -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- DOSE -->
+                        <div class="border-2 border-slate-200 rounded-xl p-4 relative bg-white flex flex-col justify-center items-center">
+                            <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-700 px-3 py-0.5 rounded-full text-[10px] font-bold text-white uppercase tracking-wider shadow-sm">DOSE</span>
+                            <div class="mt-2 text-center">
+                                <span id="resDose" class="text-3xl font-bold text-slate-800 transition-all">0.000</span>
+                                <span class="text-slate-500 font-medium ml-1">mg</span>
+                            </div>
                         </div>
-                        <p class="text-[11px] text-center text-cyan-700 mt-1 font-medium">Unrounded: <span id="resVolumeUnrounded">X.XXX</span> mL</p>
+
+                        <!-- VOLUME PER DOSE -->
+                        <div class="border-2 border-cyan-200 rounded-xl p-4 relative bg-cyan-50/30 flex flex-col justify-center items-center">
+                            <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-cyan-500 px-3 py-0.5 rounded-full text-[10px] font-bold text-white uppercase tracking-wider shadow-sm">VOLUME</span>
+                            <div class="mt-2 text-center">
+                                <span id="resVolume" class="text-3xl font-bold text-cyan-600 transition-all">0.00</span>
+                                <span class="text-cyan-600 font-medium ml-1">mL</span>
+                            </div>
+                            <p class="text-[10px] text-center text-cyan-700 mt-1 font-medium">Unrounded: <span id="resVolumeUnrounded">0.000</span> mL</p>
+                        </div>
                     </div>
 
-                    <!-- ORAL SYRINGE SIZE -->
-                    <div class="border-2 border-amber-400 rounded-xl p-4 relative bg-white">
-                        <span class="absolute -top-3 left-4 bg-amber-400 px-3 py-0.5 rounded text-[10px] font-bold text-amber-900 uppercase tracking-wider">ORAL SYRINGE SIZE</span>
-                        <div class="flex items-center justify-center gap-4 mt-1">
-                            <span id="resSyringeVol" class="text-2xl font-bold text-slate-800">X mL</span>
-                            <span id="resSyringeColor" class="px-3 py-1 rounded-full text-sm font-semibold flex items-center bg-slate-100 text-slate-500 border border-slate-300">
-                                <span id="resSyringeDot" class="w-3 h-3 rounded-full bg-slate-400 mr-2"></span> Color
-                            </span>
+                    <!-- ORAL SYRINGE SIZE (Dynamic Color Card) -->
+                    <div id="syringeCard" class="border-2 border-slate-200 rounded-xl p-5 relative bg-slate-50 flex items-center justify-between transition-colors duration-500">
+                        <span class="absolute -top-3 left-4 bg-white border border-slate-200 px-3 py-0.5 rounded-full text-[10px] font-bold text-slate-600 uppercase tracking-wider shadow-sm" id="syringeBadgeTitle">ORAL SYRINGE SIZE</span>
+                        
+                        <div class="flex flex-col">
+                            <div class="flex items-center gap-3">
+                                <span id="resSyringeVol" class="text-3xl font-bold text-slate-800">-</span>
+                                <span id="resSyringeColor" class="px-3 py-1 rounded-full text-xs font-bold flex items-center bg-white text-slate-400 border border-slate-200 shadow-sm">
+                                    <span id="resSyringeDot" class="w-3 h-3 rounded-full bg-slate-300 mr-1.5"></span> -
+                                </span>
+                            </div>
+                            <p id="syringeText" class="text-xs font-medium text-slate-500 mt-1">Please enter patient data</p>
                         </div>
+                        
+                        <!-- Syringe Image Graphic / Placeholder -->
+                        <div class="w-24 h-16 flex items-center justify-center opacity-80" id="syringeGraphic">
+                            <!-- TODO: หากมีภาพของจริง ให้นำแท็ก <img src="URL_ภาพ"> มาวางแทนที่ <svg> ด้านล่างได้เลย -->
+                            <svg class="w-full h-full text-slate-300" viewBox="0 0 100 40" fill="currentColor">
+                                <rect x="20" y="10" width="50" height="16" rx="2" opacity="0.3"></rect>
+                                <rect x="70" y="12" width="20" height="4"></rect>
+                                <rect x="90" y="8" width="4" height="20" rx="1"></rect>
+                                <rect x="15" y="15" width="5" height="6" rx="1"></rect>
+                            </svg>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -141,7 +199,7 @@
         </div>
 
         <!-- Reference Section -->
-        <div id="reference" class="mt-10 bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+        <div id="reference" class="mt-8 bg-white rounded-2xl premium-shadow border border-slate-100 overflow-hidden">
             <div class="bg-slate-800 border-b border-slate-700 px-6 py-4">
                 <h2 class="text-lg font-bold text-white flex items-center">
                     <svg class="w-5 h-5 mr-2 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -151,7 +209,7 @@
             
             <div class="p-8 space-y-10">
                 
-                <!-- Flowchart Section (ซ่อนสกรอลบาร์แนวตั้ง และกำหนด Height ชัดเจน) -->
+                <!-- Flowchart Section -->
                 <div>
                     <h3 class="text-[17px] font-bold text-[#1d2b5c] mb-6">
                         Dosing regimen by age and body weight<sup class="text-[11px]">1</sup>
@@ -160,44 +218,32 @@
                     <div class="overflow-x-auto no-vertical-scroll w-full pb-4">
                         <div class="min-w-[760px] flex flex-col items-center font-sans">
                             
-                            <!-- Level 1 -->
                             <div class="bg-[#253468] text-white px-14 py-2.5 rounded-full font-semibold text-sm shadow-md z-10 relative">
                                 Patient age
-                                <!-- เส้นชี้ลงมาจาก Patient age -->
                                 <div class="absolute left-1/2 -translate-x-1/2 bottom-[-24px] w-[3px] h-6 bg-[#1d2b5c]"></div>
                             </div>
                             
-                            <div class="h-6"></div> <!-- Spacer -->
+                            <div class="h-6"></div>
                             
-                            <!-- โครงสร้างหลัก (กว้าง 720px กำหนดความสูง 200px ให้คลุมเนื้อหาทั้งหมดเพื่อไม่ให้เกิด Scrollbar) -->
+                            <!-- โครงสร้างหลัก 720px -->
                             <div class="w-[720px] relative h-[200px]">
-                                
-                                <!-- เส้นแกนนอนยาว -->
                                 <div class="absolute top-0 left-[120px] w-[480px] h-[3px] bg-[#1d2b5c]"></div>
                                 
-                                <!-- เส้นแนวตั้ง 3 เส้นหลัก -->
                                 <div class="absolute top-0 left-[120px] w-[3px] h-[64px] bg-[#1d2b5c] -translate-x-1/2"></div>
                                 <div class="absolute top-0 left-[360px] w-[3px] h-[64px] bg-[#1d2b5c] -translate-x-1/2"></div>
                                 <div class="absolute top-0 left-[600px] w-[3px] h-[32px] bg-[#1d2b5c] -translate-x-1/2"></div>
                                 
-                                <!-- ข้อความหัวข้อ 3 คอลัมน์ -->
                                 <div class="h-[64px] w-full absolute top-0 left-0 pt-3">
                                     <div class="absolute left-[120px] -translate-x-1/2 text-[13px] font-bold text-slate-800 bg-white px-2 leading-none whitespace-nowrap">&lt;2 months</div>
                                     <div class="absolute left-[360px] -translate-x-1/2 text-[13px] font-bold text-slate-800 bg-white px-2 leading-tight text-center whitespace-nowrap">2 months to<br>&lt;2 years</div>
                                     <div class="absolute left-[600px] -translate-x-1/2 text-[13px] font-bold text-slate-800 bg-white px-2 leading-none whitespace-nowrap">&ge;2 years</div>
                                 </div>
                                 
-                                <!-- แถวกล่องผลลัพธ์ -->
                                 <div class="w-full absolute top-[64px] left-0">
-                                    <!-- กล่องซ้าย -->
                                     <div class="absolute left-[120px] -translate-x-1/2 bg-[#737e93] text-white w-[200px] py-3.5 rounded-xl text-center text-sm font-semibold shadow-md whitespace-nowrap">0.15 mg/kg X weight (kg)</div>
-                                    
-                                    <!-- กล่องกลาง -->
                                     <div class="absolute left-[360px] -translate-x-1/2 bg-[#c92a5e] text-white w-[200px] py-3.5 rounded-xl text-center text-sm font-semibold shadow-md whitespace-nowrap">0.20 mg/kg X weight (kg)</div>
                                     
-                                    <!-- ส่วนแยกฝั่งขวา (Patient weight) -->
                                     <div class="absolute left-[600px] -translate-x-1/2 flex flex-col items-center" style="top: -16px;">
-                                        <!-- กล่อง Patient weight -->
                                         <div class="bg-[#253468] text-white px-6 py-2 rounded-full font-semibold text-sm shadow-md w-[200px] text-center z-10 relative">
                                             Patient weight
                                             <div class="absolute left-1/2 -translate-x-1/2 bottom-[-20px] w-[3px] h-5 bg-[#1d2b5c]"></div>
@@ -205,7 +251,6 @@
                                         
                                         <div class="h-5"></div>
                                         
-                                        <!-- Nested Horizontal Branch -->
                                         <div class="w-[140px] relative h-[36px]">
                                             <div class="absolute top-0 left-0 w-full h-[3px] bg-[#1d2b5c]"></div>
                                             <div class="absolute top-0 left-0 w-[3px] h-full bg-[#1d2b5c]"></div>
@@ -214,7 +259,6 @@
                                             <div class="absolute top-3 right-0 translate-x-1/2 text-xs font-bold text-slate-800 bg-white px-1 whitespace-nowrap">&ge;20 kg</div>
                                         </div>
                                         
-                                        <!-- กล่องคำตอบ 2 กล่องสุดท้าย -->
                                         <div class="w-[200px] relative h-[48px]">
                                             <div class="bg-[#00a3c4] text-white w-[95px] py-2.5 rounded-xl text-center text-[11px] leading-tight font-semibold shadow-md absolute left-[30px] -translate-x-1/2 top-0">0.25 mg/kg X<br>weight (kg)</div>
                                             <div class="bg-[#fdb933] text-white w-[95px] rounded-xl text-center text-[13px] font-semibold shadow-md flex items-center justify-center h-[48px] absolute right-[30px] translate-x-1/2 top-0">5 mg</div>
@@ -280,47 +324,147 @@
 
     <!-- JavaScript Logic -->
     <script>
+        let inputMode = 'age'; // 'age' or 'dob'
+
+        // Function to toggle between Age and DOB inputs
+        function setInputMode(mode) {
+            inputMode = mode;
+            const tabAge = document.getElementById('tabAgeBtn');
+            const tabDob = document.getElementById('tabDobBtn');
+            const conAge = document.getElementById('ageInputContainer');
+            const conDob = document.getElementById('dobInputContainer');
+
+            if (mode === 'age') {
+                conAge.classList.remove('hidden');
+                conDob.classList.add('hidden');
+                
+                tabAge.classList.add('bg-white', 'text-pink-600', 'shadow-sm');
+                tabAge.classList.remove('text-slate-500', 'hover:text-slate-700');
+                
+                tabDob.classList.add('text-slate-500', 'hover:text-slate-700');
+                tabDob.classList.remove('bg-white', 'text-pink-600', 'shadow-sm');
+            } else {
+                conAge.classList.add('hidden');
+                conDob.classList.remove('hidden');
+                
+                tabDob.classList.add('bg-white', 'text-pink-600', 'shadow-sm');
+                tabDob.classList.remove('text-slate-500', 'hover:text-slate-700');
+                
+                tabAge.classList.add('text-slate-500', 'hover:text-slate-700');
+                tabAge.classList.remove('bg-white', 'text-pink-600', 'shadow-sm');
+            }
+            calculateDose();
+        }
+
+        // Reset Results function
+        function resetResults() {
+            document.getElementById('resGroup').innerText = "PLEASE ENTER DATA";
+            document.getElementById('resGroup').className = "text-xs font-bold text-slate-500 bg-slate-100 py-2 px-3 rounded-lg border border-slate-200 w-full text-center uppercase tracking-wider transition-colors duration-300";
+            
+            document.getElementById('resDose').innerText = "0.000";
+            document.getElementById('resVolumeUnrounded').innerText = "0.000";
+            document.getElementById('resVolume').innerText = "0.00";
+            
+            document.getElementById('resSyringeVol').innerText = "-";
+            document.getElementById('syringeText').innerText = "Please enter patient data";
+            
+            const card = document.getElementById('syringeCard');
+            card.className = "border-2 border-slate-200 rounded-xl p-5 relative bg-slate-50 flex items-center justify-between transition-colors duration-500";
+            document.getElementById('syringeBadgeTitle').className = "absolute -top-3 left-4 bg-white border border-slate-200 px-3 py-0.5 rounded-full text-[10px] font-bold text-slate-600 uppercase tracking-wider shadow-sm";
+            
+            const colorEl = document.getElementById('resSyringeColor');
+            colorEl.className = `px-3 py-1 rounded-full text-xs font-bold flex items-center bg-white text-slate-400 border border-slate-200 shadow-sm`;
+            colorEl.innerHTML = `<span class="w-3 h-3 rounded-full bg-slate-300 mr-1.5"></span> -`;
+
+            // Reset SVG Color to generic
+            document.getElementById('syringeGraphic').innerHTML = `
+                <svg class="w-full h-full text-slate-300" viewBox="0 0 100 40" fill="currentColor">
+                    <rect x="20" y="10" width="50" height="16" rx="2" opacity="0.3"></rect>
+                    <rect x="70" y="12" width="20" height="4"></rect>
+                    <rect x="90" y="8" width="4" height="20" rx="1"></rect>
+                    <rect x="15" y="15" width="5" height="6" rx="1"></rect>
+                </svg>`;
+        }
+
         function calculateDose() {
-            const years = parseInt(document.getElementById('ageYears').value) || 0;
-            const months = parseInt(document.getElementById('ageMonths').value) || 0;
-            const weight = parseFloat(document.getElementById('weight').value);
+            let totalMonths = 0;
             const errBox = document.getElementById('errorMessage');
+            const ageDisplay = document.getElementById('calculatedAgeDisplay');
+
+            // Calculate age based on input mode
+            if (inputMode === 'age') {
+                const years = parseInt(document.getElementById('ageYears').value) || 0;
+                const months = parseInt(document.getElementById('ageMonths').value) || 0;
+                totalMonths = (years * 12) + months;
+            } else {
+                const dobVal = document.getElementById('dobInput').value;
+                if (!dobVal) {
+                    ageDisplay.innerText = "";
+                    resetResults();
+                    return;
+                }
+                const dob = new Date(dobVal);
+                const today = new Date();
+                
+                let m = (today.getFullYear() - dob.getFullYear()) * 12;
+                m -= dob.getMonth();
+                m += today.getMonth();
+                if (today.getDate() < dob.getDate()) {
+                    m--;
+                }
+                totalMonths = m < 0 ? 0 : m;
+                
+                const calcY = Math.floor(totalMonths / 12);
+                const calcM = totalMonths % 12;
+                ageDisplay.innerText = `อายุที่คำนวณได้: ${calcY} ปี ${calcM} เดือน`;
+            }
+
+            const weight = parseFloat(document.getElementById('weight').value);
 
             if (isNaN(weight) || weight <= 0) {
-                errBox.classList.remove('hidden');
+                errBox.classList.add('hidden');
+                resetResults();
                 return;
             } else {
                 errBox.classList.add('hidden');
             }
-
-            const totalMonths = (years * 12) + months;
             
             let dose = 0;
             let groupText = "";
+            let groupClass = "";
 
+            // Step 1: Determine Dose Logic
             if (totalMonths < 2) {
                 dose = 0.15 * weight;
                 groupText = "Patient age < 2 months";
+                groupClass = "text-[#737e93] bg-slate-100 border-[#737e93]/30";
             } else if (totalMonths >= 2 && totalMonths < 24) {
                 dose = 0.20 * weight;
                 groupText = "Patient age 2 months to < 2 years";
+                groupClass = "text-[#c92a5e] bg-pink-50 border-[#c92a5e]/30";
             } else if (totalMonths >= 24 && weight < 20) {
                 dose = 0.25 * weight;
                 groupText = "Patient age ≥ 2 years (< 20 kg)";
+                groupClass = "text-[#00a3c4] bg-cyan-50 border-[#00a3c4]/30";
             } else if (totalMonths >= 24 && weight >= 20) {
                 dose = 5.0;
                 groupText = "Patient age ≥ 2 years (≥ 20 kg)";
+                groupClass = "text-[#fdb933] bg-amber-50 border-[#fdb933]/50";
             }
 
             if (dose > 5) dose = 5.0;
 
+            // Step 2: Calculate Volume (Dose / 0.75)
             const unroundedVolume = dose / 0.75;
             let roundedVolume = 0;
             
+            // Step 3: Determine Syringe Size
             let syringeSize = "";
             let colorClass = "";
             let dotClass = "";
             let colorName = "";
+            let cardBgClass = "";
+            let syringeGraphicColor = "";
 
             if (unroundedVolume <= 1.0) {
                 roundedVolume = (Math.round(unroundedVolume * 100) / 100).toFixed(2);
@@ -328,12 +472,16 @@
                 colorName = "Yellow";
                 colorClass = "bg-amber-100 text-amber-800 border-amber-300";
                 dotClass = "bg-[#fdb933]";
+                cardBgClass = "bg-amber-50/50 border-amber-300";
+                syringeGraphicColor = "text-[#fdb933]";
             } else if (unroundedVolume > 1.0 && unroundedVolume <= 6.0) {
                 roundedVolume = (Math.round(unroundedVolume * 10) / 10).toFixed(1);
                 syringeSize = "6 mL";
                 colorName = "Grey";
                 colorClass = "bg-slate-200 text-slate-700 border-slate-300";
                 dotClass = "bg-[#737e93]";
+                cardBgClass = "bg-slate-100/50 border-slate-300";
+                syringeGraphicColor = "text-[#737e93]";
             } else {
                 let vol = unroundedVolume;
                 if (vol > 6.6) vol = 6.6;
@@ -342,18 +490,48 @@
                 colorName = "Brown";
                 colorClass = "bg-[#6B3513] text-white border-[#52270d]";
                 dotClass = "bg-white";
+                cardBgClass = "bg-[#6B3513]/10 border-[#6B3513]/40";
+                syringeGraphicColor = "text-[#6B3513]";
             }
 
+            // Update UI
             document.getElementById('resGroup').innerText = groupText;
+            document.getElementById('resGroup').className = `text-xs font-bold py-2 px-3 rounded-lg border w-full text-center uppercase tracking-wider transition-colors duration-300 ${groupClass}`;
+            
             document.getElementById('resDose').innerText = dose.toFixed(3);
             document.getElementById('resVolumeUnrounded').innerText = unroundedVolume.toFixed(3);
             document.getElementById('resVolume').innerText = roundedVolume;
             document.getElementById('resSyringeVol').innerText = syringeSize;
+            document.getElementById('syringeText').innerText = `Increment: ${syringeSize === '1 mL' ? '0.01' : (syringeSize === '6 mL' ? '0.1' : '0.2')} mL`;
             
+            // Update Card Theme
+            const card = document.getElementById('syringeCard');
+            card.className = `border-2 rounded-xl p-5 relative flex items-center justify-between transition-colors duration-500 ${cardBgClass}`;
+            
+            document.getElementById('syringeBadgeTitle').className = `absolute -top-3 left-4 bg-white border px-3 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-sm ${cardBgClass.split(' ')[1]} text-slate-700`;
+
             const colorEl = document.getElementById('resSyringeColor');
-            colorEl.className = `px-3 py-1 rounded-full text-sm font-semibold flex items-center border shadow-sm ${colorClass}`;
-            colorEl.innerHTML = `<span class="w-2.5 h-2.5 rounded-full ${dotClass} mr-2"></span> ${colorName}`;
+            colorEl.className = `px-3 py-1 rounded-full text-xs font-bold flex items-center border shadow-sm ${colorClass}`;
+            colorEl.innerHTML = `<span class="w-3 h-3 rounded-full ${dotClass} mr-1.5"></span> ${colorName}`;
+
+            // Update Syringe Graphic Color
+            document.getElementById('syringeGraphic').innerHTML = `
+                <svg class="w-full h-full ${syringeGraphicColor}" viewBox="0 0 100 40" fill="currentColor">
+                    <rect x="20" y="10" width="50" height="16" rx="2" opacity="0.6"></rect>
+                    <rect x="70" y="12" width="20" height="4"></rect>
+                    <rect x="90" y="8" width="4" height="20" rx="1"></rect>
+                    <rect x="15" y="15" width="5" height="6" rx="1"></rect>
+                    <!-- Scale marks -->
+                    <line x1="25" y1="10" x2="25" y2="15" stroke="black" stroke-width="0.5" opacity="0.5"></line>
+                    <line x1="35" y1="10" x2="35" y2="15" stroke="black" stroke-width="0.5" opacity="0.5"></line>
+                    <line x1="45" y1="10" x2="45" y2="15" stroke="black" stroke-width="0.5" opacity="0.5"></line>
+                    <line x1="55" y1="10" x2="55" y2="15" stroke="black" stroke-width="0.5" opacity="0.5"></line>
+                    <line x1="65" y1="10" x2="65" y2="15" stroke="black" stroke-width="0.5" opacity="0.5"></line>
+                </svg>`;
         }
+        
+        // Initialize Default View
+        setInputMode('age');
     </script>
 </body>
 </html>
