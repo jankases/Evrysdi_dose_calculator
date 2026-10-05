@@ -30,15 +30,16 @@
 
     <div class="max-w-5xl mx-auto">
         <!-- Header -->
-        <header class="mb-6 text-center md:text-left flex flex-col md:flex-row justify-between items-center bg-white p-6 rounded-2xl premium-shadow border border-slate-100">
+        <header class="mb-6 text-center md:text-left flex flex-col md:flex-row justify-between items-center bg-white p-6 md:px-8 md:py-6 rounded-2xl premium-shadow border border-slate-100">
             <div class="flex flex-col items-center md:items-start">
-                <!-- ขยายขนาดโลโก้ Evrysdi ให้ใหญ่ขึ้น -->
-                <img src="Evrysdi_logo.png" alt="EVRYSDI® (risdiplam)" class="h-16 md:h-20 object-contain mb-3">
-                <p class="text-slate-500 text-sm md:text-base font-medium">Dose Calculator Website for Healthcare Professionals</p>
+                <!-- ขยายขนาดโลโก้ Evrysdi ให้ใหญ่และโดดเด่นขึ้น -->
+                <img src="Evrysdi_logo.png" alt="EVRYSDI® (risdiplam)" class="h-20 md:h-28 object-contain mb-3">
+                <!-- ขยับ Subtitle เล็กน้อยเพื่อให้บาลานซ์กับโลโก้ที่ใหญ่ขึ้น -->
+                <p class="text-slate-500 text-sm md:text-base font-medium md:pl-2">Dose Calculator Website for Healthcare Professionals</p>
             </div>
-            <div class="mt-4 md:mt-0">
-                <!-- ลดขนาดโลโก้ Roche ให้เล็กลง -->
-                <img src="roche_logo.png" alt="Roche" class="h-8 md:h-10 object-contain">
+            <div class="mt-5 md:mt-0">
+                <!-- โลโก้ Roche ปรับสัดส่วนให้เข้ากัน -->
+                <img src="roche_logo.png" alt="Roche" class="h-10 md:h-12 object-contain">
             </div>
         </header>
 
@@ -170,9 +171,8 @@
                             <p id="syringeText" class="text-xs font-medium text-slate-500 mt-1">Please enter patient data</p>
                         </div>
                         
-                        <!-- Syringe Image Graphic -->
+                        <!-- Syringe Image Graphic (ตัดพื้นหลังด้วย mix-blend-multiply) -->
                         <div class="w-40 h-full flex items-center justify-end relative" id="syringeGraphic">
-                            <!-- เพิ่ม class mix-blend-multiply เพื่อตัดพื้นหลังสีขาวของภาพกระบอกฉีดยาออกอัตโนมัติ -->
                             <img id="syringeImage" src="" alt="Syringe" class="max-w-full max-h-full object-contain hidden transition-opacity duration-300 mix-blend-multiply">
                         </div>
 
@@ -307,7 +307,7 @@
 
     <!-- JavaScript Logic -->
     <script>
-        let inputMode = 'age'; // 'age' or 'dob'
+        let inputMode = 'age';
 
         // Function to clamp month input
         function handleMonthInput(el) {
@@ -379,7 +379,6 @@
             colorEl.className = `px-3 py-1 rounded-full text-xs font-bold flex items-center bg-white text-slate-400 border border-slate-200 shadow-sm`;
             colorEl.innerHTML = `<span class="w-3 h-3 rounded-full bg-slate-300 mr-1.5"></span> -`;
 
-            // ซ่อนรูปภาพเมื่อไม่มีข้อมูลการคำนวณ
             const imgEl = document.getElementById('syringeImage');
             imgEl.classList.add('hidden');
             imgEl.src = "";
@@ -436,7 +435,6 @@
 
             const weight = parseFloat(weightVal);
 
-            // ต้องมีทั้งอายุและน้ำหนักถึงจะคำนวณ
             if (isNaN(weight) || weight <= 0 || !hasAge) {
                 resetResults();
                 return;
@@ -474,7 +472,6 @@
             let dotClass = "";
             let colorName = "";
             let cardBgClass = "";
-            
             let syringeImgSrc = "";
 
             if (unroundedVolume <= 1.0) {
@@ -523,7 +520,6 @@
             colorEl.className = `px-3 py-1 rounded-full text-xs font-bold flex items-center border shadow-sm ${colorClass}`;
             colorEl.innerHTML = `<span class="w-3 h-3 rounded-full ${dotClass} mr-1.5"></span> ${colorName}`;
 
-            // แสดงรูปภาพกระบอกฉีดยา
             const imgEl = document.getElementById('syringeImage');
             imgEl.src = syringeImgSrc;
             imgEl.classList.remove('hidden');
