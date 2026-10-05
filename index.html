@@ -155,7 +155,6 @@
 
                         <!-- VOLUME PER DOSE -->
                         <div class="border-2 border-slate-200 rounded-xl p-4 relative bg-white flex flex-col justify-center items-center shadow-sm">
-                            <!-- แก้ไขคำให้ตรงตามดีไซน์อ้างอิง: VOLUME PER DOSE (ROUNDED) -->
                             <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-700 px-3 py-0.5 rounded-full text-[10px] font-bold text-white uppercase tracking-wider shadow-sm whitespace-nowrap">VOLUME PER DOSE <span class="font-normal opacity-90">(ROUNDED)</span></span>
                             <div class="mt-2 text-center">
                                 <span id="resVolume" class="text-3xl font-bold text-slate-800 transition-all">0.00</span>
@@ -201,14 +200,14 @@
             
             <div class="p-8 space-y-10">
                 
-                <!-- Flowchart Section -->
+                <!-- Flowchart Section (ปรับกล่องคำตอบเป็นแนวยาว อ่านง่ายตรงตามต้นฉบับ) -->
                 <div>
                     <h3 class="text-[17px] font-bold text-[#1d2b5c] mb-6">
                         Dosing regimen by age and body weight<sup class="text-[11px]">1</sup>
                     </h3>
                     
                     <div class="overflow-x-auto no-vertical-scroll w-full pb-4">
-                        <div class="min-w-[760px] flex flex-col items-center font-sans">
+                        <div class="min-w-[820px] flex flex-col items-center font-sans">
                             
                             <div class="bg-[#253468] text-white px-14 py-2.5 rounded-full font-semibold text-sm shadow-md z-10 relative">
                                 Patient age
@@ -217,32 +216,42 @@
                             
                             <div class="h-6"></div>
                             
-                            <div class="w-[720px] relative h-[200px]">
-                                <div class="absolute top-0 left-[120px] w-[480px] h-[3px] bg-[#1d2b5c]"></div>
+                            <!-- โครงสร้างหลัก (กว้าง 780px ขยายเพื่อรองรับกล่องแนวยาว) -->
+                            <div class="w-[780px] relative h-[180px]">
+                                <!-- เส้นนอนหลักเชื่อม 3 กิ่ง (ตำแหน่ง: 120px, 370px, 640px) -->
+                                <div class="absolute top-0 left-[120px] w-[520px] h-[3px] bg-[#1d2b5c]"></div>
                                 
+                                <!-- เส้นตั้งชี้ลง 3 กิ่ง -->
                                 <div class="absolute top-0 left-[120px] w-[3px] h-[64px] bg-[#1d2b5c] -translate-x-1/2"></div>
-                                <div class="absolute top-0 left-[360px] w-[3px] h-[64px] bg-[#1d2b5c] -translate-x-1/2"></div>
-                                <div class="absolute top-0 left-[600px] w-[3px] h-[32px] bg-[#1d2b5c] -translate-x-1/2"></div>
+                                <div class="absolute top-0 left-[370px] w-[3px] h-[64px] bg-[#1d2b5c] -translate-x-1/2"></div>
+                                <div class="absolute top-0 left-[640px] w-[3px] h-[32px] bg-[#1d2b5c] -translate-x-1/2"></div>
                                 
+                                <!-- ข้อความบอกช่วงอายุ -->
                                 <div class="h-[64px] w-full absolute top-0 left-0 pt-3">
                                     <div class="absolute left-[120px] -translate-x-1/2 text-[13px] font-bold text-slate-800 bg-white px-2 leading-none whitespace-nowrap">&lt;2 months</div>
-                                    <div class="absolute left-[360px] -translate-x-1/2 text-[13px] font-bold text-slate-800 bg-white px-2 leading-tight text-center whitespace-nowrap">2 months to<br>&lt;2 years</div>
-                                    <div class="absolute left-[600px] -translate-x-1/2 text-[13px] font-bold text-slate-800 bg-white px-2 leading-none whitespace-nowrap">&ge;2 years</div>
+                                    <div class="absolute left-[370px] -translate-x-1/2 text-[13px] font-bold text-slate-800 bg-white px-2 leading-tight text-center whitespace-nowrap">2 months to<br>&lt;2 years</div>
+                                    <div class="absolute left-[640px] -translate-x-1/2 text-[13px] font-bold text-slate-800 bg-white px-2 leading-none whitespace-nowrap">&ge;2 years</div>
                                 </div>
                                 
+                                <!-- แถวกล่องคำตอบด้านล่าง -->
                                 <div class="w-full absolute top-[64px] left-0">
-                                    <div class="absolute left-[120px] -translate-x-1/2 bg-[#737e93] text-white w-[200px] py-3.5 rounded-xl text-center text-sm font-semibold shadow-md whitespace-nowrap">0.15 mg/kg X weight (kg)</div>
-                                    <div class="absolute left-[360px] -translate-x-1/2 bg-[#c92a5e] text-white w-[200px] py-3.5 rounded-xl text-center text-sm font-semibold shadow-md whitespace-nowrap">0.20 mg/kg X weight (kg)</div>
+                                    <!-- กิ่ง 1: < 2 เดือน -->
+                                    <div class="absolute left-[120px] -translate-x-1/2 bg-[#737e93] text-white px-5 py-3.5 rounded-xl text-center text-sm font-semibold shadow-md whitespace-nowrap">0.15 mg/kg X weight (kg)</div>
                                     
-                                    <div class="absolute left-[600px] -translate-x-1/2 flex flex-col items-center" style="top: -16px;">
-                                        <div class="bg-[#253468] text-white px-6 py-2 rounded-full font-semibold text-sm shadow-md w-[200px] text-center z-10 relative">
+                                    <!-- กิ่ง 2: 2 เดือน ถึง < 2 ปี -->
+                                    <div class="absolute left-[370px] -translate-x-1/2 bg-[#c92a5e] text-white px-5 py-3.5 rounded-xl text-center text-sm font-semibold shadow-md whitespace-nowrap">0.20 mg/kg X weight (kg)</div>
+                                    
+                                    <!-- กิ่ง 3: >= 2 ปี (แยกย่อยตามน้ำหนัก) -->
+                                    <div class="absolute left-[640px] -translate-x-1/2 flex flex-col items-center" style="top: -16px;">
+                                        <div class="bg-[#253468] text-white px-6 py-2 rounded-full font-semibold text-sm shadow-md w-[190px] text-center z-10 relative">
                                             Patient weight
                                             <div class="absolute left-1/2 -translate-x-1/2 bottom-[-20px] w-[3px] h-5 bg-[#1d2b5c]"></div>
                                         </div>
                                         
                                         <div class="h-5"></div>
                                         
-                                        <div class="w-[140px] relative h-[36px]">
+                                        <!-- เส้นแยกขยายกว้างขึ้นเป็น 210px เพื่อวางกล่องแนวยาว -->
+                                        <div class="w-[210px] relative h-[36px]">
                                             <div class="absolute top-0 left-0 w-full h-[3px] bg-[#1d2b5c]"></div>
                                             <div class="absolute top-0 left-0 w-[3px] h-full bg-[#1d2b5c]"></div>
                                             <div class="absolute top-0 right-0 w-[3px] h-full bg-[#1d2b5c]"></div>
@@ -250,9 +259,12 @@
                                             <div class="absolute top-3 right-0 translate-x-1/2 text-xs font-bold text-slate-800 bg-white px-1 whitespace-nowrap">&ge;20 kg</div>
                                         </div>
                                         
-                                        <div class="w-[200px] relative h-[48px]">
-                                            <div class="bg-[#00a3c4] text-white w-[95px] py-2.5 rounded-xl text-center text-[11px] leading-tight font-semibold shadow-md absolute left-[30px] -translate-x-1/2 top-0">0.25 mg/kg X<br>weight (kg)</div>
-                                            <div class="bg-[#fdb933] text-white w-[95px] rounded-xl text-center text-[13px] font-semibold shadow-md flex items-center justify-center h-[48px] absolute right-[30px] translate-x-1/2 top-0">5 mg</div>
+                                        <!-- กล่องผลลัพธ์แนวยาวขนานกัน 2 กล่อง -->
+                                        <div class="w-[300px] flex justify-between absolute top-[72px]">
+                                            <!-- กล่องสีฟ้าแบบแนวยาวบรรทัดเดียว อ่านง่าย -->
+                                            <div class="bg-[#00a3c4] text-white px-4 py-3 rounded-xl text-center text-xs font-semibold shadow-md whitespace-nowrap absolute left-0 -translate-x-1/2">0.25 mg/kg X weight (kg)</div>
+                                            <!-- กล่องสีเหลือง 5 mg -->
+                                            <div class="bg-[#fdb933] text-white px-6 py-3 rounded-xl text-center text-xs font-semibold shadow-md whitespace-nowrap absolute right-0 translate-x-1/2">5 mg</div>
                                         </div>
                                     </div>
                                 </div>
