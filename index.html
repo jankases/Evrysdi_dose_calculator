@@ -70,13 +70,13 @@
                     <div id="ageInputContainer" class="block">
                         <label class="block text-sm font-semibold text-slate-700 mb-2">1.1 Age (อายุ)</label>
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="relative bg-white border border-slate-300 rounded-xl px-4 py-2 input-focus-ring transition shadow-sm">
+                            <div class="relative bg-white border border-slate-300 rounded-xl px-4 py-2 input-focus-ring transition shadow-sm group">
                                 <label class="block text-[11px] text-slate-500 font-medium">Year (s) / ปี</label>
-                                <input type="number" id="ageYears" oninput="calculateDose()" inputmode="numeric" min="0" class="w-full bg-transparent outline-none text-xl font-bold text-slate-800 placeholder-slate-300" placeholder="0">
+                                <input type="number" id="ageYears" oninput="calculateDose()" inputmode="numeric" min="0" class="w-full bg-transparent outline-none text-xl font-bold text-slate-800 placeholder-slate-300 focus:placeholder-transparent transition-all" placeholder="เช่น 2">
                             </div>
-                            <div class="relative bg-white border border-slate-300 rounded-xl px-4 py-2 input-focus-ring transition shadow-sm">
+                            <div class="relative bg-white border border-slate-300 rounded-xl px-4 py-2 input-focus-ring transition shadow-sm group">
                                 <label class="block text-[11px] text-slate-500 font-medium">Month (s) / เดือน</label>
-                                <input type="number" id="ageMonths" oninput="handleMonthInput(this)" inputmode="numeric" min="0" max="11" class="w-full bg-transparent outline-none text-xl font-bold text-slate-800 placeholder-slate-300" placeholder="0">
+                                <input type="number" id="ageMonths" oninput="handleMonthInput(this)" inputmode="numeric" min="0" max="11" class="w-full bg-transparent outline-none text-xl font-bold text-slate-800 placeholder-slate-300 focus:placeholder-transparent transition-all" placeholder="เช่น 6">
                             </div>
                         </div>
                     </div>
@@ -84,11 +84,11 @@
                     <!-- 1.1 Date of Birth Input -->
                     <div id="dobInputContainer" class="hidden">
                         <label class="block text-sm font-semibold text-slate-700 mb-2">1.1 Date of Birth (วันเกิด)</label>
-                        <div class="relative bg-white border border-slate-300 rounded-xl px-4 py-2 input-focus-ring transition shadow-sm cursor-pointer">
+                        <div class="relative bg-white border border-slate-300 rounded-xl px-4 py-2 input-focus-ring transition shadow-sm cursor-pointer group">
                             <label class="block text-[11px] text-slate-500 font-medium">เลือกวันที่</label>
                             <div class="flex items-center justify-between">
-                                <input type="text" id="dobInput" class="w-full bg-transparent outline-none text-lg font-bold text-slate-800 py-1 cursor-pointer" placeholder="dd/mm/yyyy">
-                                <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                <input type="text" id="dobInput" class="w-full bg-transparent outline-none text-lg font-bold text-slate-800 py-1 cursor-pointer placeholder-slate-300 focus:placeholder-transparent transition-all" placeholder="dd/mm/yyyy">
+                                <svg class="w-5 h-5 text-slate-400 group-focus-within:text-pink-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                             </div>
                         </div>
                         <p id="calculatedAgeDisplay" class="text-xs text-pink-600 mt-2 font-medium"></p>
@@ -97,29 +97,29 @@
                     <!-- 1.2 Body weight -->
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 mb-2">1.2 Body weight (น้ำหนัก)</label>
-                        <div class="relative bg-white border border-slate-300 rounded-xl px-4 py-2 input-focus-ring transition flex items-center shadow-sm">
+                        <div class="relative bg-white border border-slate-300 rounded-xl px-4 py-2 input-focus-ring transition flex items-center shadow-sm group">
                             <div class="flex-grow">
                                 <label class="block text-[11px] text-slate-500 font-medium">ระบุน้ำหนักตัว</label>
-                                <input type="number" id="weight" oninput="calculateDose()" inputmode="decimal" step="0.1" min="0" class="w-full bg-transparent outline-none text-2xl font-bold text-slate-800 placeholder-slate-300" placeholder="0.0">
+                                <input type="number" id="weight" oninput="calculateDose()" inputmode="decimal" step="0.1" min="0" class="w-full bg-transparent outline-none text-2xl font-bold text-slate-800 placeholder-slate-300 focus:placeholder-transparent transition-all" placeholder="เช่น 12.5">
                             </div>
-                            <span class="text-slate-400 font-bold text-lg px-2">kg</span>
+                            <span class="text-slate-400 font-bold text-lg px-2 group-focus-within:text-pink-500 transition-colors">kg</span>
                         </div>
                     </div>
 
                     <!-- แถบแจ้งเตือน Real-time และปุ่ม Reset -->
-                    <div class="flex gap-2">
-                        <div class="bg-blue-50 text-blue-600 p-3 rounded-xl text-sm font-medium flex items-center justify-center flex-grow text-center">
-                            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    <div class="flex gap-3 mt-2">
+                        <div class="bg-blue-50/80 hover:bg-blue-50 text-blue-600 p-3 rounded-xl text-sm font-medium flex items-center justify-center flex-grow text-center transition-all duration-300 border border-blue-100/50 cursor-default">
+                            <svg class="w-5 h-5 mr-1.5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                             ระบบคำนวณผลลัพธ์ให้อัตโนมัติ
                         </div>
-                        <button onclick="clearAllData()" class="bg-slate-100 hover:bg-slate-200 text-slate-600 px-4 rounded-xl text-sm font-medium flex items-center transition border border-slate-200">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        <button onclick="clearAllData()" class="bg-slate-50 hover:bg-white text-slate-600 hover:text-pink-600 px-5 rounded-xl text-sm font-bold flex items-center transition-all duration-300 border border-slate-200 hover:border-pink-200 hover:shadow-md active:scale-95">
+                            <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                             Clear
                         </button>
                     </div>
                     
                     <div class="text-center mt-4">
-                        <a href="#reference" class="text-xs text-blue-500 hover:underline font-medium">ℹ️ ดูเกณฑ์การให้ยาด้านล่าง</a>
+                        <a href="#reference" class="text-xs text-blue-500 hover:text-blue-700 hover:underline font-medium transition-colors">ℹ️ ดูเกณฑ์การให้ยาด้านล่าง</a>
                     </div>
                 </div>
             </div>
@@ -200,14 +200,13 @@
             
             <div class="p-8 space-y-10">
                 
-                <!-- Flowchart Section (ปรับระยะห่างให้สมดุล กล่องไม่เบียดกัน) -->
+                <!-- Flowchart Section -->
                 <div>
                     <h3 class="text-[17px] font-bold text-[#1d2b5c] mb-6">
                         Dosing regimen by age and body weight<sup class="text-[11px]">1</sup>
                     </h3>
                     
                     <div class="w-full pb-4 flex justify-center">
-                        <!-- ขยาย Canvas เป็น 1080 เพื่อลดความแออัดฝั่งขวา -->
                         <svg viewBox="0 0 1080 260" class="w-full max-w-[1080px] h-auto font-sans" xmlns="http://www.w3.org/2000/svg">
                             <defs>
                                 <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%">
@@ -215,28 +214,27 @@
                                 </filter>
                             </defs>
 
-                            <!-- Connecting Lines (โครงสร้าง Bracket ปรับพิกัดใหม่ให้สมดุล) -->
+                            <!-- Connecting Lines -->
                             <g stroke="#1d2b5c" stroke-width="2.5" fill="none">
-                                
-                                <!-- Bracket ซ้าย: จากมุมซ้ายล่าง Patient age -> ลากซ้าย -> ลง Box 1 -->
+                                <!-- Bracket ซ้าย -->
                                 <path d="M 475 44 L 475 80 L 180 80 L 180 199" />
-                                <path d="M 475 80 L 500 80" /> <!-- เส้นแนวนอนยื่นเข้าหาช่องว่างตรงกลาง -->
+                                <path d="M 475 80 L 500 80" />
                                 
-                                <!-- Bracket ขวา: จากมุมขวาล่าง Patient age -> ลากขวา -> ลง Patient weight -->
+                                <!-- Bracket ขวา -->
                                 <path d="M 605 44 L 605 80 L 900 80 L 900 119" />
-                                <path d="M 605 80 L 580 80" /> <!-- เส้นแนวนอนยื่นเข้าหาช่องว่างตรงกลาง -->
+                                <path d="M 605 80 L 580 80" />
 
-                                <!-- กิ่งกลาง: เส้นดิ่งลงมาจากช่องว่างใต้ข้อความ -->
+                                <!-- กิ่งกลาง -->
                                 <path d="M 540 110 L 540 199" />
 
-                                <!-- โครงสร้างใต้ Patient weight (กางแขนกว้างขึ้นให้กล่องสีฟ้ากับชมพูห่างกัน) -->
+                                <!-- โครงสร้างใต้ Patient weight -->
                                 <path d="M 900 151 L 900 175" />
                                 <path d="M 800 175 L 1000 175" />
                                 <path d="M 800 175 L 800 199" />
                                 <path d="M 1000 175 L 1000 199" />
                             </g>
 
-                            <!-- Text Labels (จัดให้อยู่เหนือเส้นทั้งหมด) -->
+                            <!-- Text Labels -->
                             <g font-size="12" font-weight="bold" fill="#1d2b5c" text-anchor="middle">
                                 <text x="180" y="73" stroke="#ffffff" stroke-width="6" paint-order="stroke fill">&lt;2 months</text>
                                 <text x="540" y="65" stroke="#ffffff" stroke-width="6" paint-order="stroke fill">2 months to</text>
@@ -248,40 +246,37 @@
                             </g>
 
                             <!-- กล่องรูปทรงใบไม้ Leaf Shape -->
-                            
-                            <!-- Level 1: Patient age -->
                             <g filter="url(#shadow)">
                                 <path d="M 477 9 L 615 9 L 615 29 A 12 12 0 0 1 603 41 L 465 41 L 465 21 A 12 12 0 0 1 477 9 Z" fill="#253468"/>
                                 <text x="540" y="30" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">Patient age</text>
                             </g>
 
-                            <!-- Level 2: Patient weight (ขยับไปทางขวา ไม่เบียดกับสีชมพู) -->
                             <g filter="url(#shadow)">
                                 <path d="M 837 119 L 975 119 L 975 139 A 12 12 0 0 1 963 151 L 825 151 L 825 131 A 12 12 0 0 1 837 119 Z" fill="#253468"/>
                                 <text x="900" y="140" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">Patient weight</text>
                             </g>
 
-                            <!-- Level 3: BASE ROW -->
+                            <!-- BASE ROW -->
                             
-                            <!-- Box 1: <2 months (0.15 mg/kg) -->
+                            <!-- Box 1: <2 months -->
                             <g filter="url(#shadow)">
                                 <path d="M 107 199 L 265 199 L 265 229 A 12 12 0 0 1 253 241 L 95 241 L 95 211 A 12 12 0 0 1 107 199 Z" fill="#737e93"/>
                                 <text x="180" y="224" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">0.15 mg/kg X weight (kg)</text>
                             </g>
 
-                            <!-- Box 2: 2 months to <2 years (0.20 mg/kg) -->
+                            <!-- Box 2: 2 months to <2 years -->
                             <g filter="url(#shadow)">
                                 <path d="M 467 199 L 625 199 L 625 229 A 12 12 0 0 1 613 241 L 455 241 L 455 211 A 12 12 0 0 1 467 199 Z" fill="#c92a5e"/>
                                 <text x="540" y="224" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">0.20 mg/kg X weight (kg)</text>
                             </g>
 
-                            <!-- Box 3: >=2 years & <20 kg (0.25 mg/kg) -->
+                            <!-- Box 3: >=2 years & <20 kg -->
                             <g filter="url(#shadow)">
                                 <path d="M 727 199 L 885 199 L 885 229 A 12 12 0 0 1 873 241 L 715 241 L 715 211 A 12 12 0 0 1 727 199 Z" fill="#00a3c4"/>
                                 <text x="800" y="224" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">0.25 mg/kg X weight (kg)</text>
                             </g>
 
-                            <!-- Box 4: >=2 years & >=20 kg (5 mg) -->
+                            <!-- Box 4: >=2 years & >=20 kg -->
                             <g filter="url(#shadow)">
                                 <path d="M 967 199 L 1045 199 L 1045 229 A 12 12 0 0 1 1033 241 L 955 241 L 955 211 A 12 12 0 0 1 967 199 Z" fill="#fdb933"/>
                                 <text x="1000" y="224" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">5 mg</text>
@@ -509,7 +504,9 @@
             } else if (totalMonths >= 24 && weight >= 20) {
                 dose = 5.0;
                 groupText = "Patient age ≥ 2 years (≥ 20 kg)";
-                groupClass = "text-[#fdb933] bg-amber-50 border-[#fdb933]/50";
+                
+                // อัปเดตสีตรงนี้เป็น text-amber-700 ให้อ่านง่ายบนพื้นสีเหลืองอ่อน
+                groupClass = "text-amber-700 bg-amber-50 border-amber-300"; 
             }
 
             if (dose > 5) dose = 5.0;
