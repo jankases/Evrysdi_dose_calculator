@@ -5,24 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>EVRYSDI® (risdiplam) Oral Syringe Calculator</title>
     
-    <!-- PWA Settings: ทำให้รองรับการ Add to Home Screen บนมือถือ -->
+    <!-- PWA Settings -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Evrysdi Calc">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#ffffff">
 
-    <!-- ใช้ Tailwind CSS ผ่าน CDN -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- ฟอนต์ภาษาไทยและอังกฤษ -->
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Prompt', sans-serif; }
-        /* ซ่อนลูกศรขึ้นลงในช่องกรอกตัวเลข */
         input[type=number]::-webkit-inner-spin-button, 
         input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-        
-        /* เพิ่ม Smooth Scroll สำหรับการกดลิงก์ในหน้าเว็บ */
         html { scroll-behavior: smooth; }
     </style>
 </head>
@@ -57,7 +53,6 @@
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-xs text-slate-500 mb-1">Year (s) / ปี</label>
-                                <!-- เพิ่ม inputmode เพื่อให้มือถือเด้งแป้นตัวเลข -->
                                 <input type="number" id="ageYears" inputmode="numeric" min="0" value="0" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-pink-400 outline-none transition text-lg font-medium" placeholder="0">
                             </div>
                             <div>
@@ -149,93 +144,99 @@
                 </h2>
             </div>
             
-            <div class="p-6 space-y-10">
-                <!-- Flowchart Section (สร้างด้วย CSS แก้เส้นตรงแล้ว) -->
-                <div class="overflow-x-auto w-full pb-4">
-                    <div class="min-w-[700px] flex flex-col items-center font-sans">
-                        
-                        <div class="text-center font-bold text-sm text-[#1d2b5c] mb-6 uppercase tracking-wider">
-                            Use the flowchart below to determine the recommended<br>once-daily dose in mg for each patient
-                        </div>
-                        
-                        <!-- Level 1: Patient Age -->
-                        <div class="bg-[#253468] text-white px-12 py-2.5 rounded-full font-semibold text-sm shadow-md">Patient age</div>
-                        <div class="w-[3px] h-6 bg-[#1d2b5c]"></div>
-                        
-                        <!-- Level 2: Horizontal Branch (ปรับความกว้างให้ตรงพอดีเป๊ะที่ 440px) -->
-                        <div class="w-[440px] border-t-[3px] border-[#1d2b5c] relative">
-                            <div class="w-[3px] h-6 bg-[#1d2b5c] absolute left-0 top-0"></div>
-                            <div class="w-[3px] h-6 bg-[#1d2b5c] absolute left-1/2 -translate-x-1/2 top-0"></div>
-                            <div class="w-[3px] h-6 bg-[#1d2b5c] absolute right-0 top-0"></div>
-                        </div>
-                        
-                        <!-- Level 3 & 4: Columns for Text and Boxes -->
-                        <div class="w-[660px] flex justify-between mt-2">
+            <div class="p-8 space-y-10">
+                
+                <!-- Flowchart Section -->
+                <div>
+                    <h3 class="text-[17px] font-bold text-[#1d2b5c] mb-6">
+                        Dosing regimen by age and body weight<sup class="text-[11px]">1</sup>
+                    </h3>
+                    
+                    <div class="overflow-x-auto w-full pb-6">
+                        <div class="min-w-[760px] flex flex-col items-center font-sans">
                             
-                            <!-- Branch <2 months -->
-                            <div class="w-[220px] flex flex-col items-center">
-                                <div class="text-xs font-bold text-slate-800 mb-2">&lt;2 months</div>
-                                <div class="w-[3px] h-10 bg-[#1d2b5c]"></div>
-                                <div class="bg-[#737e93] text-white w-[180px] py-3.5 rounded-lg text-center text-sm font-semibold shadow-md">0.15 mg/kg X weight (kg)</div>
+                            <div class="text-center font-bold text-sm text-[#1d2b5c] mb-6 uppercase tracking-wider bg-blue-50 px-6 py-2 rounded-lg border border-blue-100">
+                                Use the flowchart below to determine the recommended<br>once-daily dose in mg for each patient
                             </div>
                             
-                            <!-- Branch 2 months to <2 years -->
-                            <div class="w-[220px] flex flex-col items-center">
-                                <div class="text-xs font-bold text-slate-800 mb-2 text-center">2 months to<br>&lt;2 years</div>
-                                <div class="w-[3px] h-[16px] bg-[#1d2b5c]"></div>
-                                <div class="bg-[#cc2962] text-white w-[180px] py-3.5 rounded-lg text-center text-sm font-semibold shadow-md mt-[8px]">0.20 mg/kg X weight (kg)</div>
+                            <!-- Level 1 -->
+                            <div class="bg-[#253468] text-white px-14 py-2.5 rounded-full font-semibold text-sm shadow-md z-10">Patient age</div>
+                            <div class="w-[3px] h-6 bg-[#1d2b5c]"></div>
+                            
+                            <!-- Level 2: Horizontal Branch -->
+                            <div class="w-[480px] border-t-[3px] border-[#1d2b5c] relative">
+                                <div class="w-[3px] h-6 bg-[#1d2b5c] absolute left-0 top-0"></div>
+                                <div class="w-[3px] h-6 bg-[#1d2b5c] absolute left-1/2 -translate-x-1/2 top-0"></div>
+                                <div class="w-[3px] h-6 bg-[#1d2b5c] absolute right-0 top-0"></div>
                             </div>
                             
-                            <!-- Branch >=2 years (Nested) -->
-                            <div class="w-[220px] flex flex-col items-center">
-                                <div class="text-xs font-bold text-slate-800 mb-2">&ge;2 years</div>
-                                <div class="w-[3px] h-3 bg-[#1d2b5c]"></div>
-                                <div class="bg-[#253468] text-white px-6 py-2 rounded-full font-semibold text-xs shadow-md w-[180px] text-center">Patient weight</div>
-                                <div class="w-[3px] h-4 bg-[#1d2b5c]"></div>
+                            <!-- Level 3 & 4 -->
+                            <div class="w-[720px] flex justify-between mt-2">
                                 
-                                <div class="w-[140px] border-t-[3px] border-[#1d2b5c] relative">
-                                    <div class="w-[3px] h-4 bg-[#1d2b5c] absolute left-0 top-0"></div>
-                                    <div class="w-[3px] h-4 bg-[#1d2b5c] absolute right-0 top-0"></div>
+                                <div class="w-[240px] flex flex-col items-center">
+                                    <div class="text-[13px] font-bold text-slate-800 mb-2">&lt;2 months</div>
+                                    <div class="w-[3px] h-10 bg-[#1d2b5c]"></div>
+                                    <div class="bg-[#737e93] text-white w-[190px] py-3.5 rounded-xl text-center text-sm font-semibold shadow-md">0.15 mg/kg X weight (kg)</div>
                                 </div>
                                 
-                                <div class="w-[160px] flex justify-between mt-4 text-[11px] font-bold text-slate-800">
-                                    <div class="w-1/2 text-center">&lt;20 kg</div>
-                                    <div class="w-1/2 text-center">&ge;20 kg</div>
+                                <div class="w-[240px] flex flex-col items-center">
+                                    <div class="text-[13px] font-bold text-slate-800 mb-2 text-center leading-tight">2 months to<br>&lt;2 years</div>
+                                    <div class="w-[3px] h-[16px] bg-[#1d2b5c]"></div>
+                                    <div class="bg-[#c92a5e] text-white w-[190px] py-3.5 rounded-xl text-center text-sm font-semibold shadow-md mt-[8px]">0.20 mg/kg X weight (kg)</div>
                                 </div>
                                 
-                                <div class="w-[160px] flex justify-between mt-1">
-                                    <div class="w-[75px] flex flex-col items-center">
-                                        <div class="w-[3px] h-4 bg-[#1d2b5c]"></div>
-                                        <div class="bg-[#009fc2] text-white w-full py-2.5 rounded-lg text-center text-[11px] leading-tight font-semibold shadow-md">0.25 mg/kg X<br>weight (kg)</div>
+                                <div class="w-[240px] flex flex-col items-center">
+                                    <div class="text-[13px] font-bold text-slate-800 mb-2">&ge;2 years</div>
+                                    <div class="w-[3px] h-4 bg-[#1d2b5c]"></div>
+                                    <div class="bg-[#253468] text-white px-6 py-2 rounded-full font-semibold text-sm shadow-md w-[200px] text-center z-10">Patient weight</div>
+                                    <div class="w-[3px] h-5 bg-[#1d2b5c]"></div>
+                                    
+                                    <div class="w-[140px] border-t-[3px] border-[#1d2b5c] relative">
+                                        <div class="w-[3px] h-5 bg-[#1d2b5c] absolute left-0 top-0"></div>
+                                        <div class="w-[3px] h-5 bg-[#1d2b5c] absolute right-0 top-0"></div>
                                     </div>
-                                    <div class="w-[75px] flex flex-col items-center">
-                                        <div class="w-[3px] h-4 bg-[#1d2b5c]"></div>
-                                        <div class="bg-[#ffbc47] text-white w-full rounded-lg text-center text-[12px] font-semibold shadow-md flex items-center justify-center h-[48px]">5 mg</div>
+                                    
+                                    <div class="w-[180px] flex justify-between mt-4 text-xs font-bold text-slate-800">
+                                        <div class="w-1/2 text-center">&lt;20 kg</div>
+                                        <div class="w-1/2 text-center">&ge;20 kg</div>
+                                    </div>
+                                    
+                                    <div class="w-[190px] flex justify-between mt-1">
+                                        <div class="w-[95px] flex flex-col items-center">
+                                            <div class="w-[3px] h-4 bg-[#1d2b5c]"></div>
+                                            <div class="bg-[#00a3c4] text-white w-full py-2.5 rounded-xl text-center text-[11px] leading-tight font-semibold shadow-md">0.25 mg/kg X<br>weight (kg)</div>
+                                        </div>
+                                        <div class="w-[95px] flex flex-col items-center">
+                                            <div class="w-[3px] h-4 bg-[#1d2b5c]"></div>
+                                            <div class="bg-[#fdb933] text-white w-[80px] rounded-xl text-center text-[13px] font-semibold shadow-md flex items-center justify-center h-[48px]">5 mg</div>
+                                        </div>
                                     </div>
                                 </div>
+                                
                             </div>
-                            
                         </div>
                     </div>
                 </div>
 
                 <!-- Syringe Selection Table -->
-                <div class="pt-6 border-t border-slate-200">
-                    <h3 class="text-md font-bold text-[#1d2b5c] mb-4">Selection of the oral syringe for the prescribed daily dose</h3>
-                    <div class="overflow-x-auto rounded-xl border border-slate-200">
+                <div class="pt-2">
+                    <h3 class="text-[17px] font-bold text-[#1d2b5c] mb-4">
+                        Selection of the oral syringe for the prescribed daily dose<sup class="text-[11px]">1</sup>
+                    </h3>
+                    <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
                         <table class="w-full text-left border-collapse">
                             <thead>
                                 <tr class="bg-slate-100 text-[#1d2b5c] text-sm">
-                                    <th class="p-4 border-b-2 border-slate-200">Syringe size</th>
-                                    <th class="p-4 border-b-2 border-slate-200">Dosing volume</th>
-                                    <th class="p-4 border-b-2 border-slate-200 text-center">Syringe markings</th>
+                                    <th class="p-4 border-b-2 border-slate-200 w-1/3">Syringe size</th>
+                                    <th class="p-4 border-b-2 border-slate-200 w-1/3">Dosing volume</th>
+                                    <th class="p-4 border-b-2 border-slate-200 w-1/3 text-center">Syringe markings</th>
                                 </tr>
                             </thead>
-                            <tbody class="text-sm">
+                            <tbody class="text-[15px]">
                                 <tr class="border-b border-slate-100 hover:bg-slate-50 transition">
                                     <td class="p-4 flex items-center font-semibold text-slate-700">
                                         1 mL 
-                                        <span class="ml-4 px-3 py-1 rounded-full bg-amber-100 text-amber-800 border border-amber-300 text-xs flex items-center shadow-sm"><span class="w-2.5 h-2.5 rounded-full bg-[#ffbc47] mr-2"></span> Yellow</span>
+                                        <span class="ml-4 px-3 py-1 rounded-full bg-amber-100 text-amber-800 border border-amber-300 text-xs flex items-center shadow-sm"><span class="w-2.5 h-2.5 rounded-full bg-[#fdb933] mr-2"></span> Yellow</span>
                                     </td>
                                     <td class="p-4 text-slate-700 font-medium">0.3 mL to 1 mL</td>
                                     <td class="p-4 text-center text-slate-600 font-mono bg-slate-50/50">0.01 mL</td>
@@ -251,7 +252,7 @@
                                 <tr class="hover:bg-slate-50 transition">
                                     <td class="p-4 flex items-center font-semibold text-slate-700">
                                         12 mL 
-                                        <span class="ml-3 px-3 py-1 rounded-full bg-[#3d2b24] text-white border border-[#2b1f1a] text-xs flex items-center shadow-sm"><span class="w-2.5 h-2.5 rounded-full bg-white mr-2"></span> Brown</span>
+                                        <span class="ml-3 px-3 py-1 rounded-full bg-[#6B3513] text-white border border-[#52270d] text-xs flex items-center shadow-sm"><span class="w-2.5 h-2.5 rounded-full bg-white mr-2"></span> Brown</span>
                                     </td>
                                     <td class="p-4 text-slate-700 font-medium">6.2 mL to 6.6 mL</td>
                                     <td class="p-4 text-center text-slate-600 font-mono bg-slate-50/50">0.2 mL</td>
@@ -259,6 +260,11 @@
                             </tbody>
                         </table>
                     </div>
+                    
+                    <!-- Reference Footnote (ข้อความที่คุณต้องการ) -->
+                    <p class="text-[12px] text-slate-600 mt-6 font-medium tracking-wide">
+                        Reference 1.Evrysdi® Prescribing Information 2025
+                    </p>
                 </div>
             </div>
         </div>
@@ -267,13 +273,11 @@
     <!-- JavaScript Logic -->
     <script>
         function calculateDose() {
-            // Get inputs
             const years = parseInt(document.getElementById('ageYears').value) || 0;
             const months = parseInt(document.getElementById('ageMonths').value) || 0;
             const weight = parseFloat(document.getElementById('weight').value);
             const errBox = document.getElementById('errorMessage');
 
-            // Validate weight
             if (isNaN(weight) || weight <= 0) {
                 errBox.classList.remove('hidden');
                 return;
@@ -281,13 +285,11 @@
                 errBox.classList.add('hidden');
             }
 
-            // Calculate total age in months
             const totalMonths = (years * 12) + months;
             
             let dose = 0;
             let groupText = "";
 
-            // Step 1: Determine Dose Logic
             if (totalMonths < 2) {
                 dose = 0.15 * weight;
                 groupText = "Patient age < 2 months";
@@ -298,56 +300,46 @@
                 dose = 0.25 * weight;
                 groupText = "Patient age ≥ 2 years (< 20 kg)";
             } else if (totalMonths >= 24 && weight >= 20) {
-                dose = 5.0; // Max dose
+                dose = 5.0;
                 groupText = "Patient age ≥ 2 years (≥ 20 kg)";
             }
 
-            // Safety limit (Max dose is 5mg)
             if (dose > 5) dose = 5.0;
 
-            // Step 2: Calculate Volume (Dose / 0.75)
             const unroundedVolume = dose / 0.75;
             let roundedVolume = 0;
             
-            // Step 3: Determine Syringe Size and Rounding
             let syringeSize = "";
             let colorClass = "";
             let dotClass = "";
             let colorName = "";
 
             if (unroundedVolume <= 1.0) {
-                // 1 mL syringe, round to 0.01
                 roundedVolume = (Math.round(unroundedVolume * 100) / 100).toFixed(2);
                 syringeSize = "1 mL";
                 colorName = "Yellow";
                 colorClass = "bg-amber-100 text-amber-800 border-amber-300";
-                dotClass = "bg-[#ffbc47]";
+                dotClass = "bg-[#fdb933]";
             } else if (unroundedVolume > 1.0 && unroundedVolume <= 6.0) {
-                // 6 mL syringe, round to 0.1
                 roundedVolume = (Math.round(unroundedVolume * 10) / 10).toFixed(1);
                 syringeSize = "6 mL";
                 colorName = "Grey";
                 colorClass = "bg-slate-200 text-slate-700 border-slate-300";
                 dotClass = "bg-[#737e93]";
             } else {
-                // 12 mL syringe, round to 0.2
-                // Handle max volume cap 6.6 mL
                 let vol = unroundedVolume;
                 if (vol > 6.6) vol = 6.6;
                 roundedVolume = (Math.round(vol * 5) / 5).toFixed(1);
                 syringeSize = "12 mL";
                 colorName = "Brown";
-                colorClass = "bg-[#3d2b24] text-white border-[#2b1f1a]";
+                colorClass = "bg-[#6B3513] text-white border-[#52270d]";
                 dotClass = "bg-white";
             }
 
-            // Update UI
             document.getElementById('resGroup').innerText = groupText;
             document.getElementById('resDose').innerText = dose.toFixed(3);
             document.getElementById('resVolumeUnrounded').innerText = unroundedVolume.toFixed(3);
             document.getElementById('resVolume').innerText = roundedVolume;
-            
-            // Syringe UI
             document.getElementById('resSyringeVol').innerText = syringeSize;
             
             const colorEl = document.getElementById('resSyringeColor');
