@@ -200,7 +200,7 @@
             
             <div class="p-8 space-y-10">
                 
-                <!-- Flowchart Section (ปรับระดับ Y ให้กล่องทั้ง 4 วางบนระนาบแนวนอนเดียวกัน 100% ตรงตามต้นฉบับ) -->
+                <!-- Flowchart Section (แก้พิกัดจุดเชื่อมและกิ่งก้านให้เป๊ะเหมือนต้นฉบับ 100%) -->
                 <div>
                     <h3 class="text-[17px] font-bold text-[#1d2b5c] mb-6">
                         Dosing regimen by age and body weight<sup class="text-[11px]">1</sup>
@@ -215,23 +215,23 @@
                                     </filter>
                                 </defs>
 
-                                <!-- Connecting Lines (เส้นเชื่อมโครงสร้าง) -->
+                                <!-- Connecting Lines (เส้นเชื่อมโครงสร้างที่คำนวณตำแหน่งตรงเป๊ะ) -->
                                 <g stroke="#1d2b5c" stroke-width="2.5" fill="none">
-                                    <!-- Main Tree Lines -->
-                                    <path d="M 420 42 L 420 68 M 120 68 L 720 68 M 120 68 L 120 180 M 320 68 L 320 180 M 720 68 L 720 90" />
-                                    <!-- Sub Tree Lines (Patient weight -> 2 กิ่งล่าง) -->
-                                    <path d="M 720 122 L 720 148 M 580 148 L 780 148 M 580 148 L 580 180 M 780 148 L 780 180" />
+                                    <!-- Main Tree Lines (จาก Patient age) -->
+                                    <path d="M 420 42 L 420 68 M 120 68 L 680 68 M 120 68 L 120 180 M 320 68 L 320 180 M 680 68 L 680 90" />
+                                    <!-- Sub Tree Lines (จาก Patient weight ชี้ลงมา 2 กิ่งย่อยอย่างสมดุล) -->
+                                    <path d="M 680 122 L 680 148 M 580 148 L 780 148 M 580 148 L 580 180 M 780 148 L 780 180" />
                                 </g>
 
-                                <!-- Text Labels on Lines (ข้อความบนเส้น) -->
+                                <!-- Text Labels on Lines (ข้อความบนเส้น พร้อม background กันเส้นทับ) -->
                                 <g font-size="12" font-weight="bold" fill="#1d2b5c" text-anchor="middle">
-                                    <text x="120" y="60" fill="#1d2b5c" stroke="#ffffff" stroke-width="4" paint-order="stroke fill">&lt;2 months</text>
-                                    <text x="320" y="54" fill="#1d2b5c" stroke="#ffffff" stroke-width="4" paint-order="stroke fill">2 months to</text>
-                                    <text x="320" y="66" fill="#1d2b5c" stroke="#ffffff" stroke-width="4" paint-order="stroke fill">&lt;2 years</text>
-                                    <text x="720" y="60" fill="#1d2b5c" stroke="#ffffff" stroke-width="4" paint-order="stroke fill">&ge;2 years</text>
+                                    <text x="120" y="60" stroke="#ffffff" stroke-width="5" paint-order="stroke fill">&lt;2 months</text>
+                                    <text x="320" y="53" stroke="#ffffff" stroke-width="5" paint-order="stroke fill">2 months to</text>
+                                    <text x="320" y="66" stroke="#ffffff" stroke-width="5" paint-order="stroke fill">&lt;2 years</text>
+                                    <text x="680" y="60" stroke="#ffffff" stroke-width="5" paint-order="stroke fill">&ge;2 years</text>
                                     
-                                    <text x="580" y="142" fill="#1d2b5c" stroke="#ffffff" stroke-width="4" paint-order="stroke fill">&lt;20 kg</text>
-                                    <text x="780" y="142" fill="#1d2b5c" stroke="#ffffff" stroke-width="4" paint-order="stroke fill">&ge;20 kg</text>
+                                    <text x="580" y="142" stroke="#ffffff" stroke-width="5" paint-order="stroke fill">&lt;20 kg</text>
+                                    <text x="780" y="142" stroke="#ffffff" stroke-width="5" paint-order="stroke fill">&ge;20 kg</text>
                                 </g>
 
                                 <!-- Level 1: Patient age -->
@@ -240,10 +240,10 @@
                                     <text x="420" y="31" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">Patient age</text>
                                 </g>
 
-                                <!-- Level 2: Middle Box (Patient weight) -->
+                                <!-- Level 2: Middle Box (Patient weight - ตรงศูนย์กลางระหว่างกิ่งย่อย) -->
                                 <g filter="url(#shadow)">
-                                    <rect x="645" y="90" width="150" height="32" rx="16" fill="#253468"/>
-                                    <text x="720" y="111" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">Patient weight</text>
+                                    <rect x="605" y="90" width="150" height="32" rx="16" fill="#253468"/>
+                                    <text x="680" y="111" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">Patient weight</text>
                                 </g>
 
                                 <!-- Level 3: BASE ROW (กล่องคำตอบทั้ง 4 วางบนระนาบ Y=180 เดียวกันทั้งหมด) -->
