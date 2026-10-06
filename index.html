@@ -37,14 +37,13 @@
 
     <div class="max-w-5xl mx-auto">
         <!-- Header -->
-        <header class="mb-6 text-center md:text-left flex flex-col md:flex-row justify-between items-start bg-white p-6 md:px-8 md:py-6 rounded-2xl premium-shadow border border-slate-100">
+        <header class="mb-6 text-center md:text-left flex flex-col md:flex-row justify-between items-center bg-white p-6 md:px-8 md:py-6 rounded-2xl premium-shadow border border-slate-100">
             <div class="flex flex-col items-center md:items-start">
                 <img src="Evrysdi_logo.png" alt="EVRYSDI® (risdiplam)" class="h-20 md:h-28 object-contain mb-3">
                 <p class="text-slate-500 text-sm md:text-base font-medium md:pl-2">Dose Calculator Website for Healthcare Professionals</p>
             </div>
-            <!-- ปรับขนาดและดันโลโก้ Roche ไปมุมขวาบน -->
-            <div class="mt-4 md:mt-0 pt-2 flex justify-center md:justify-end w-full md:w-auto">
-                <img src="roche_logo.png" alt="Roche" class="h-6 md:h-8 object-contain opacity-70 hover:opacity-100 transition-opacity duration-300">
+            <div class="mt-5 md:mt-0">
+                <img src="roche_logo.png" alt="Roche" class="h-10 md:h-12 object-contain opacity-70 hover:opacity-100 transition-opacity duration-300">
             </div>
         </header>
 
@@ -73,11 +72,13 @@
                         <div class="grid grid-cols-2 gap-4">
                             <div class="relative bg-white border border-slate-300 rounded-xl px-4 py-2 input-focus-ring transition shadow-sm group">
                                 <label class="block text-[11px] text-slate-500 font-medium">Year (s) / ปี</label>
-                                <input type="number" id="ageYears" oninput="calculateDose()" inputmode="numeric" min="0" class="w-full bg-transparent outline-none text-xl font-bold text-slate-800 placeholder-slate-300 focus:placeholder-transparent transition-all" placeholder="เช่น 2">
+                                <!-- บล็อกคีย์ -, +, e, E และ . สำหรับช่องอายุ -->
+                                <input type="number" id="ageYears" oninput="calculateDose()" onkeydown="if(['-','+','e','E','.'].includes(event.key)) event.preventDefault();" inputmode="numeric" min="0" class="w-full bg-transparent outline-none text-xl font-bold text-slate-800 placeholder-slate-300 focus:placeholder-transparent transition-all" placeholder="เช่น 2">
                             </div>
                             <div class="relative bg-white border border-slate-300 rounded-xl px-4 py-2 input-focus-ring transition shadow-sm group">
                                 <label class="block text-[11px] text-slate-500 font-medium">Month (s) / เดือน</label>
-                                <input type="number" id="ageMonths" oninput="handleMonthInput(this)" inputmode="numeric" min="0" max="11" class="w-full bg-transparent outline-none text-xl font-bold text-slate-800 placeholder-slate-300 focus:placeholder-transparent transition-all" placeholder="เช่น 6">
+                                <!-- บล็อกคีย์ -, +, e, E และ . สำหรับช่องอายุ -->
+                                <input type="number" id="ageMonths" oninput="handleMonthInput(this)" onkeydown="if(['-','+','e','E','.'].includes(event.key)) event.preventDefault();" inputmode="numeric" min="0" max="11" class="w-full bg-transparent outline-none text-xl font-bold text-slate-800 placeholder-slate-300 focus:placeholder-transparent transition-all" placeholder="เช่น 6">
                             </div>
                         </div>
                     </div>
@@ -101,7 +102,8 @@
                         <div class="relative bg-white border border-slate-300 rounded-xl px-4 py-2 input-focus-ring transition flex items-center shadow-sm group">
                             <div class="flex-grow">
                                 <label class="block text-[11px] text-slate-500 font-medium">ระบุน้ำหนักตัว</label>
-                                <input type="number" id="weight" oninput="calculateDose()" inputmode="decimal" step="0.1" min="0" class="w-full bg-transparent outline-none text-2xl font-bold text-slate-800 placeholder-slate-300 focus:placeholder-transparent transition-all" placeholder="เช่น 12.5">
+                                <!-- บล็อกคีย์ -, +, e, E สำหรับช่องน้ำหนัก (อนุญาตให้พิมพ์ . ได้เพราะต้องการทศนิยม) -->
+                                <input type="number" id="weight" oninput="calculateDose()" onkeydown="if(['-','+','e','E'].includes(event.key)) event.preventDefault();" inputmode="decimal" step="0.1" min="0" class="w-full bg-transparent outline-none text-2xl font-bold text-slate-800 placeholder-slate-300 focus:placeholder-transparent transition-all" placeholder="เช่น 12.5">
                             </div>
                             <span class="text-slate-400 font-bold text-lg px-2 group-focus-within:text-pink-500 transition-colors">kg</span>
                         </div>
