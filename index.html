@@ -42,6 +42,7 @@
                 <img src="Evrysdi_logo.png" alt="EVRYSDI® (risdiplam)" class="h-20 md:h-28 object-contain mb-3">
                 <p class="text-slate-500 text-sm md:text-base font-medium md:pl-2">Dose Calculator Website for Healthcare Professionals</p>
             </div>
+            <!-- โลโก้ Roche มุมขวาบน (สีชัด 100%) -->
             <div class="mt-4 md:mt-0 pt-2 flex justify-center md:justify-end w-full md:w-auto">
                 <img src="roche_logo.png" alt="Roche" class="h-6 md:h-8 object-contain">
             </div>
@@ -159,7 +160,7 @@
 
                         <!-- VOLUME PER DOSE -->
                         <div class="border-2 border-slate-200 rounded-xl p-4 relative bg-white flex flex-col justify-center items-center shadow-sm">
-                            <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-700 px-3 py-0.5 rounded-full text-[10px] font-bold text-white uppercase tracking-wider shadow-sm whitespace-nowrap">VOLUME PER DOSE <span class="font-normal opacity-90">(ROUNDED)</span></span>
+                            <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-700 px-3 py-0.5 rounded-full text-[10px] font-bold text-white uppercase tracking-wider shadow-sm whitespace-nowrap">VOLUME PER DOSE <span class="font-normal opacity-90">(TABLE VALUE)</span></span>
                             <div class="mt-2 text-center">
                                 <span id="resVolume" class="text-3xl font-bold text-slate-800 transition-all">0.00</span>
                                 <span class="text-slate-500 font-medium ml-1">mL</span>
@@ -332,6 +333,48 @@
         let inputMode = 'age';
         let fpInstance = null;
 
+        // Dosing Tables (Hardcoded Lookup based on official prescribing ranges)
+        const table1 = [ // Age: <2 months
+            [2.5, 2.5, 0.375, 0.50, '1 mL'], [2.6, 2.6, 0.390, 0.52, '1 mL'], [2.7, 2.7, 0.405, 0.54, '1 mL'],
+            [2.8, 2.8, 0.420, 0.56, '1 mL'], [2.9, 2.9, 0.435, 0.58, '1 mL'], [3.0, 3.0, 0.450, 0.60, '1 mL'],
+            [3.1, 3.1, 0.465, 0.62, '1 mL'], [3.2, 3.2, 0.480, 0.64, '1 mL'], [3.3, 3.3, 0.495, 0.66, '1 mL'],
+            [3.4, 3.4, 0.510, 0.68, '1 mL'], [3.5, 3.5, 0.525, 0.70, '1 mL'], [3.6, 3.6, 0.540, 0.72, '1 mL'],
+            [3.7, 3.7, 0.555, 0.74, '1 mL'], [3.8, 3.8, 0.570, 0.76, '1 mL'], [3.9, 3.9, 0.585, 0.78, '1 mL'],
+            [4.0, 4.0, 0.600, 0.80, '1 mL'], [4.1, 4.1, 0.615, 0.82, '1 mL'], [4.2, 4.2, 0.630, 0.84, '1 mL'],
+            [4.3, 4.3, 0.645, 0.86, '1 mL'], [4.4, 4.4, 0.660, 0.88, '1 mL'], [4.5, 4.5, 0.675, 0.90, '1 mL'],
+            [4.6, 4.6, 0.690, 0.92, '1 mL'], [4.7, 4.7, 0.705, 0.94, '1 mL'], [4.8, 4.8, 0.720, 0.96, '1 mL'],
+            [4.9, 4.9, 0.735, 0.98, '1 mL'], [5.0, 5.2, 0.750, 1.00, '1 mL or 6 mL'], 
+            [5.3, 5.7, 0.825, 1.10, '6 mL'], [5.8, 6.0, 0.900, 1.20, '6 mL']
+        ];
+
+        const table2 = [ // Age: 2 months to <2 years
+            [3.6, 3.9, 0.75, 1.0, '6 mL'], [4.0, 4.3, 0.83, 1.1, '6 mL'], [4.4, 4.6, 0.90, 1.2, '6 mL'],
+            [4.7, 5.0, 0.98, 1.3, '6 mL'], [5.1, 5.4, 1.05, 1.4, '6 mL'], [5.5, 5.8, 1.13, 1.5, '6 mL'],
+            [5.9, 6.1, 1.20, 1.6, '6 mL'], [6.2, 6.5, 1.28, 1.7, '6 mL'], [6.6, 6.9, 1.35, 1.8, '6 mL'],
+            [7.0, 7.3, 1.43, 1.9, '6 mL'], [7.4, 7.6, 1.50, 2.0, '6 mL'], [7.7, 8.0, 1.58, 2.1, '6 mL'],
+            [8.1, 8.4, 1.65, 2.2, '6 mL'], [8.5, 8.8, 1.73, 2.3, '6 mL'], [8.9, 9.1, 1.80, 2.4, '6 mL'],
+            [9.2, 9.5, 1.88, 2.5, '6 mL'], [9.6, 9.9, 1.95, 2.6, '6 mL'], [10.0, 10.3, 2.03, 2.7, '6 mL'],
+            [10.4, 10.6, 2.10, 2.8, '6 mL'], [10.7, 11.0, 2.18, 2.9, '6 mL'], [11.1, 11.4, 2.25, 3.0, '6 mL'],
+            [11.5, 11.8, 2.33, 3.1, '6 mL'], [11.9, 12.1, 2.40, 3.2, '6 mL'], [12.2, 12.5, 2.48, 3.3, '6 mL'],
+            [12.6, 12.9, 2.55, 3.4, '6 mL'], [13.0, 13.0, 2.63, 3.5, '6 mL']
+        ];
+
+        const table3 = [ // Age: 2 years or older (<20 kg)
+            [8.0, 8.2, 2.03, 2.7, '6 mL'], [8.3, 8.5, 2.10, 2.8, '6 mL'], [8.6, 8.8, 2.18, 2.9, '6 mL'],
+            [8.9, 9.1, 2.25, 3.0, '6 mL'], [9.2, 9.4, 2.33, 3.1, '6 mL'], [9.5, 9.7, 2.40, 3.2, '6 mL'],
+            [9.8, 10.0, 2.48, 3.3, '6 mL'], [10.1, 10.3, 2.55, 3.4, '6 mL'], [10.4, 10.6, 2.63, 3.5, '6 mL'],
+            [10.7, 10.9, 2.70, 3.6, '6 mL'], [11.0, 11.2, 2.78, 3.7, '6 mL'], [11.3, 11.5, 2.85, 3.8, '6 mL'],
+            [11.6, 11.8, 2.93, 3.9, '6 mL'], [11.9, 12.1, 3.00, 4.0, '6 mL'], [12.2, 12.4, 3.08, 4.1, '6 mL'],
+            [12.5, 12.7, 3.15, 4.2, '6 mL'], [12.8, 13.0, 3.23, 4.3, '6 mL'], [13.1, 13.3, 3.30, 4.4, '6 mL'],
+            [13.4, 13.6, 3.38, 4.5, '6 mL'], [13.7, 13.9, 3.45, 4.6, '6 mL'], [14.0, 14.2, 3.53, 4.7, '6 mL'],
+            [14.3, 14.5, 3.60, 4.8, '6 mL'], [14.6, 14.8, 3.68, 4.9, '6 mL'], [14.9, 15.1, 3.75, 5.0, '6 mL'],
+            [15.2, 15.4, 3.83, 5.1, '6 mL'], [15.5, 15.7, 3.90, 5.2, '6 mL'], [15.8, 16.0, 3.98, 5.3, '6 mL'],
+            [16.1, 16.3, 4.05, 5.4, '6 mL'], [16.4, 16.6, 4.13, 5.5, '6 mL'], [16.7, 16.9, 4.20, 5.6, '6 mL'],
+            [17.0, 17.2, 4.28, 5.7, '6 mL'], [17.3, 17.5, 4.35, 5.8, '6 mL'], [17.6, 17.8, 4.43, 5.9, '6 mL'],
+            [17.9, 18.2, 4.50, 6.0, '12 mL'], [18.3, 18.8, 4.65, 6.2, '12 mL'], [18.9, 19.4, 4.80, 6.4, '12 mL'],
+            [19.5, 19.9, 5.00, 6.6, '12 mL']
+        ];
+
         document.addEventListener("DOMContentLoaded", function() {
             fpInstance = flatpickr("#dobInput", {
                 dateFormat: "Y-m-d",
@@ -495,75 +538,107 @@
             let dose = 0;
             let groupText = "";
             let groupClass = "";
+            let unroundedVolume = 0;
+            let roundedVolume = 0;
+            let syringeSize = "";
+            let foundInTable = false;
+            
+            // Round weight to 1 decimal place to match table bounds
+            const rw = Math.round(weight * 10) / 10;
 
             if (totalMonths < 2) {
-                dose = 0.15 * weight;
                 groupText = "Patient age < 2 months";
                 groupClass = "text-[#737e93] bg-slate-100 border-[#737e93]/30";
+                let row = table1.find(r => rw >= r[0] && rw <= r[1]);
+                if(row) {
+                    dose = row[2];
+                    roundedVolume = row[3].toFixed(2);
+                    syringeSize = row[4];
+                    foundInTable = true;
+                } else {
+                    dose = 0.15 * weight;
+                }
             } else if (totalMonths >= 2 && totalMonths < 24) {
-                dose = 0.20 * weight;
                 groupText = "Patient age 2 months to < 2 years";
                 groupClass = "text-[#c92a5e] bg-pink-50 border-[#c92a5e]/30";
+                let row = table2.find(r => rw >= r[0] && rw <= r[1]);
+                if(row) {
+                    dose = row[2];
+                    roundedVolume = row[3].toFixed(1);
+                    syringeSize = row[4];
+                    foundInTable = true;
+                } else {
+                    dose = 0.20 * weight;
+                }
             } else if (totalMonths >= 24 && weight < 20) {
-                dose = 0.25 * weight;
                 groupText = "Patient age ≥ 2 years (< 20 kg)";
                 groupClass = "text-[#00a3c4] bg-cyan-50 border-[#00a3c4]/30";
+                let row = table3.find(r => rw >= r[0] && rw <= r[1]);
+                if(row) {
+                    dose = row[2];
+                    roundedVolume = row[3].toFixed(1);
+                    syringeSize = row[4];
+                    foundInTable = true;
+                } else {
+                    dose = 0.25 * weight;
+                }
             } else if (totalMonths >= 24 && weight >= 20) {
-                dose = 5.0;
                 groupText = "Patient age ≥ 2 years (≥ 20 kg)";
                 groupClass = "text-amber-700 bg-amber-50 border-amber-300"; 
+                dose = 5.0;
+                roundedVolume = "6.6";
+                syringeSize = "12 mL";
+                foundInTable = true; 
             }
 
-            if (dose > 5) dose = 5.0;
+            unroundedVolume = dose / 0.75;
 
-            const unroundedVolume = dose / 0.75;
-            let roundedVolume = 0;
-            
-            let syringeSize = "";
+            // Fallback for extreme weights not found in official tables
+            if (!foundInTable) {
+                if (dose > 5) dose = 5.0;
+                unroundedVolume = dose / 0.75;
+                
+                if (unroundedVolume <= 1.0) {
+                    roundedVolume = (Math.round(unroundedVolume * 100) / 100).toFixed(2);
+                    syringeSize = "1 mL";
+                } else if (unroundedVolume > 1.0 && unroundedVolume <= 6.0) {
+                    roundedVolume = (Math.round(unroundedVolume * 10) / 10).toFixed(1);
+                    syringeSize = "6 mL";
+                } else {
+                    let vol = unroundedVolume;
+                    if (vol > 6.6) vol = 6.6;
+                    roundedVolume = (Math.round(vol * 5) / 5).toFixed(1);
+                    syringeSize = "12 mL";
+                }
+            }
+
             let colorClass = "";
             let dotClass = "";
             let colorName = "";
             let cardBgClass = "";
             let syringeImgSrc = "";
 
-            // --- Official Rounding Logic ---
-            if (unroundedVolume <= 1.0) {
-                roundedVolume = (Math.round(unroundedVolume * 100) / 100).toFixed(2);
-                syringeSize = "1 mL";
+            // Evaluate actual UI representation for syringe
+            let actualSyr = syringeSize.includes('1 mL') ? '1 mL' : (syringeSize.includes('12') ? '12 mL' : '6 mL');
+
+            if (actualSyr === '1 mL') {
                 colorName = "Yellow";
                 colorClass = "bg-amber-100 text-amber-800 border-amber-300";
                 dotClass = "bg-[#fdb933]";
                 cardBgClass = "bg-amber-50/50 border-amber-300";
                 syringeImgSrc = "syringe-1ml.png";
-            } else if (unroundedVolume > 1.0 && unroundedVolume <= 6.0) {
-                roundedVolume = (Math.round(unroundedVolume * 10) / 10).toFixed(1);
-                syringeSize = "6 mL";
+            } else if (actualSyr === '6 mL') {
                 colorName = "Grey";
                 colorClass = "bg-slate-200 text-slate-700 border-slate-300";
                 dotClass = "bg-[#737e93]";
                 cardBgClass = "bg-slate-100/50 border-slate-300";
                 syringeImgSrc = "syringe-6ml.png";
             } else {
-                let vol = unroundedVolume;
-                if (vol > 6.6) vol = 6.6;
-                roundedVolume = (Math.round(vol * 5) / 5).toFixed(1);
-                syringeSize = "12 mL";
                 colorName = "Brown";
                 colorClass = "bg-[#6B3513] text-white border-[#52270d]";
                 dotClass = "bg-white";
                 cardBgClass = "bg-[#6B3513]/10 border-[#6B3513]/40";
                 syringeImgSrc = "syringe-12ml.png";
-            }
-
-            // --- Clinical Rule Override: สำหรับกลุ่มอายุ 2 เดือนถึง < 2 ปี และน้ำหนัก 3.6 หรือ 3.7 kg ---
-            if (groupText === "Patient age 2 months to < 2 years" && (weight === 3.6 || weight === 3.7)) {
-                roundedVolume = "1.0";  // ปรับค่า Rounded เป็น 1.0 mL ทันที
-                syringeSize = "6 mL";   // บังคับเปลี่ยนไปใช้กระบอกฉีดยา 6 mL
-                colorName = "Grey";
-                colorClass = "bg-slate-200 text-slate-700 border-slate-300";
-                dotClass = "bg-[#737e93]";
-                cardBgClass = "bg-slate-100/50 border-slate-300";
-                syringeImgSrc = "syringe-6ml.png";
             }
 
             document.getElementById('resGroup').innerText = groupText;
@@ -573,7 +648,10 @@
             document.getElementById('resVolumeUnrounded').innerText = unroundedVolume.toFixed(3);
             document.getElementById('resVolume').innerText = roundedVolume;
             document.getElementById('resSyringeVol').innerText = syringeSize;
-            document.getElementById('syringeText').innerText = `Increment: ${syringeSize === '1 mL' ? '0.01' : (syringeSize === '6 mL' ? '0.1' : '0.2')} mL`;
+            
+            // Set increment display dynamically based on actualSyr
+            let incAmt = (actualSyr === '1 mL') ? '0.01' : (actualSyr === '6 mL' ? '0.1' : '0.2');
+            document.getElementById('syringeText').innerText = `Increment: ${incAmt} mL`;
             
             const card = document.getElementById('syringeCard');
             card.className = `border-2 rounded-xl p-5 relative flex items-center justify-between transition-colors duration-500 h-28 shadow-sm ${cardBgClass}`;
