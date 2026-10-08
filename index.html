@@ -39,7 +39,8 @@
         <!-- Header -->
         <header class="mb-6 text-center md:text-left flex flex-col md:flex-row justify-between items-start bg-white p-6 md:px-8 md:py-6 rounded-2xl premium-shadow border border-slate-100">
             <div class="flex flex-col items-center md:items-start">
-                <img src="Evrysdi_logo.png" alt="EVRYSDI® (risdiplam)" class="h-20 md:h-28 object-contain mb-3">
+                <!-- เปลี่ยนรูปเป็นข้อความ Risdiplam สีน้ำเงินเข้ม (#1d2b5c) ตามแบรนด์ Evrysdi -->
+                <h1 class="text-4xl md:text-5xl font-extrabold text-[#1d2b5c] tracking-tighter mb-2 md:mb-3 mt-2 md:mt-4 md:pl-2">Risdiplam</h1>
                 <p class="text-slate-500 text-sm md:text-base font-medium md:pl-2">Dose Calculator Website for Healthcare Professionals</p>
             </div>
             <!-- โลโก้ Roche มุมขวาบน (สีชัด 100%) -->
@@ -67,7 +68,7 @@
                         <button id="tabDobBtn" onclick="setInputMode('dob')" class="flex-1 py-2 rounded-lg text-sm font-bold transition-all text-slate-500 hover:text-slate-700">เลือกวันเกิด (D.O.B)</button>
                     </div>
 
-                    <!-- 1.1 Age Inputs -->
+                    <!-- 1.1 Age Inputs (แบ่ง 3 คอลัมน์ ปี/เดือน/วัน) -->
                     <div id="ageInputContainer" class="block">
                         <label class="block text-sm font-semibold text-slate-700 mb-2">1.1 Age (อายุ)</label>
                         <div class="grid grid-cols-3 gap-3 md:gap-4">
@@ -219,6 +220,7 @@
                                 </filter>
                             </defs>
 
+                            <!-- Connecting Lines -->
                             <g stroke="#1d2b5c" stroke-width="2.5" fill="none">
                                 <path d="M 475 44 L 475 80 L 180 80 L 180 199" />
                                 <path d="M 475 80 L 500 80" />
@@ -231,6 +233,7 @@
                                 <path d="M 1000 175 L 1000 199" />
                             </g>
 
+                            <!-- Text Labels -->
                             <g font-size="12" font-weight="bold" fill="#1d2b5c" text-anchor="middle">
                                 <text x="180" y="73" stroke="#ffffff" stroke-width="6" paint-order="stroke fill">&lt;2 months</text>
                                 <text x="540" y="65" stroke="#ffffff" stroke-width="6" paint-order="stroke fill">2 months to</text>
@@ -240,6 +243,7 @@
                                 <text x="1000" y="168" stroke="#ffffff" stroke-width="6" paint-order="stroke fill">&ge;20 kg</text>
                             </g>
 
+                            <!-- กล่องรูปทรงใบไม้ Leaf Shape -->
                             <g filter="url(#shadow)">
                                 <path d="M 477 9 L 615 9 L 615 29 A 12 12 0 0 1 603 41 L 465 41 L 465 21 A 12 12 0 0 1 477 9 Z" fill="#253468"/>
                                 <text x="540" y="30" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">Patient age</text>
@@ -250,6 +254,7 @@
                                 <text x="900" y="140" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">Patient weight</text>
                             </g>
 
+                            <!-- BASE ROW -->
                             <g filter="url(#shadow)">
                                 <path d="M 107 199 L 265 199 L 265 229 A 12 12 0 0 1 253 241 L 95 241 L 95 211 A 12 12 0 0 1 107 199 Z" fill="#737e93"/>
                                 <text x="180" y="224" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">0.15 mg/kg X weight (kg)</text>
@@ -317,7 +322,7 @@
                     </div>
                     
                     <p class="text-[12px] text-slate-600 mt-6 font-medium tracking-wide">
-                        Reference 1.Evrysdi® Prescribing Information 2025
+                        Reference: 1. Risdiplam Prescribing Information 2025
                     </p>
                 </div>
             </div>
